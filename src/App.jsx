@@ -4,22 +4,24 @@
  * Layer       : Root Application
  *
  * Description:
- * Komponen utama aplikasi untuk merender PostDetailPage.
+ * Komponen root untuk merender halaman LoginPage saat preview/pengembangan.
  * ============================================================================
  */
 
-import { PostDetailPage } from "./features/post-detail/PostDetailPage";
+import { LoginPage } from "./features/auth/LoginPage";
 
 /**
  * Komponen utama aplikasi.
  *
- * @returns {JSX.Element} Halaman aplikasi.
+ * @returns {JSX.Element} Halaman aktif.
  */
 function App() {
   return (
-    <PostDetailPage
-      postId="p1"
-      onBack={() => alert("Kembali ke beranda diklik")}
+    <LoginPage
+      onLoginSuccess={(user) => alert(`Berhasil masuk: ${user.name}`)}
+      onGuestAccess={() => alert("Masuk sebagai tamu")}
+      onNavigateRegister={() => alert("Navigasi ke Daftar")}
+      onNavigateForgotPassword={() => alert("Navigasi ke Lupa Sandi")}
     />
   );
 }
