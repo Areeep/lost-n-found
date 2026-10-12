@@ -5,7 +5,8 @@
  *
  * Description:
  * Mengatur rute aplikasi menggunakan react-router-dom untuk halaman Cari Barang
- * (/cari), rute detail postingan dinamis (/post/:id), dan halaman autentikasi.
+ * (/cari), rute detail postingan dinamis (/post/:id), halaman autentikasi,
+ * profil, dan pembuatan postingan (/buat).
  * ============================================================================
  */
 
@@ -21,6 +22,7 @@ import { ExplorePage } from "./features/explore/ExplorePage";
 import { PostDetailPage } from "./features/post-detail/PostDetailPage";
 import { LoginPage } from "./features/auth/LoginPage";
 import { ProfilePage } from "./features/profile/ProfilePage";
+import { CreatePostPage } from "./features/posts/pages/CreatePostPage";
 
 /**
  * Wrapper rute detail postingan untuk mengambil parameter id dari URL.
@@ -32,6 +34,22 @@ function PostDetailRouteWrapper() {
   const navigate = useNavigate();
 
   return <PostDetailPage postId={id || "p1"} onBack={() => navigate(-1)} />;
+}
+
+/**
+ * Wrapper rute buat postingan untuk menghubungkan navigasi balik & selesai.
+ *
+ * @returns {JSX.Element} Komponen Buat Postingan.
+ */
+function CreatePostRouteWrapper() {
+  const navigate = useNavigate();
+
+  return (
+    <CreatePostPage
+      onCancel={() => navigate(-1)}
+      onCreated={(post) => navigate(`/post/${post.id}`)}
+    />
+  );
 }
 
 /**
@@ -48,6 +66,10 @@ function App() {
 
         {/* Halaman Cari Barang */}
         <Route path="/cari" element={<ExplorePage />} />
+
+        {/* Halaman Buat Postingan */}
+        <Route path="/buat" element={<CreatePostRouteWrapper />} />
+        <Route path="/posting" element={<Navigate to="/buat" replace />} />
 
         {/* Halaman Detail Postingan dengan Parameter ID Dinamis */}
         <Route path="/post/:id" element={<PostDetailRouteWrapper />} />
