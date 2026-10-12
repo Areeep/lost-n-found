@@ -31,6 +31,8 @@ export function LoginPage({
     onNavigateForgotPassword,
 }) {
     const {
+        username,
+        setUsername,
         email,
         setEmail,
         password,
@@ -38,7 +40,6 @@ export function LoginPage({
         errorMessage,
         isSubmitting,
         handleSubmit,
-        handleGuestLogin,
     } = useLoginForm({
         onSuccess: onLoginSuccess,
         onGuestAccess: onGuestAccess,
@@ -52,6 +53,8 @@ export function LoginPage({
             {/* Kolom Kanan / Layar Mobile: Form Masuk */}
             <section className="flex items-center justify-center w-full bg-white">
                 <LoginForm
+                    username={username}
+                    setUsername={setUsername}
                     email={email}
                     setEmail={setEmail}
                     password={password}
@@ -59,7 +62,6 @@ export function LoginPage({
                     errorMessage={errorMessage}
                     isSubmitting={isSubmitting}
                     onSubmit={handleSubmit}
-                    onGuestLogin={handleGuestLogin}
                     onForgotPassword={onNavigateForgotPassword}
                     onRegisterClick={onNavigateRegister}
                 />

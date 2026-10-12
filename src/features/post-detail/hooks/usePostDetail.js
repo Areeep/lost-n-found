@@ -9,12 +9,13 @@
  * ============================================================================
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
     getPostById,
     addCommentToPost,
     isPostSaved,
     toggleSavePost,
+    getCurrentUser,
 } from "../../../lib/storage";
 
 /**
@@ -24,18 +25,18 @@ import {
  * @returns {object} Kumpulan state dan handler interaksi.
  */
 export function usePostDetail(postId) {
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState(() => (postId ? getPostById(postId) : null));
     const [activePhotoIndex, setActivePhotoIndex] = useState(0);
     const [commentText, setCommentText] = useState("");
-    const [saved, setSaved] = useState(false);
+    const [saved, setSaved] = useState(() => (postId ? isPostSaved(postId) : false));
 
-    // * Mengambil data postingan dan status simpanan saat postId berubah
-    useEffect(() => {
-        if (!postId) return;
-        const foundPost = getPostById(postId);
-        setPost(foundPost);
-        setSaved(isPostSaved(postId));
-    }, [postId]);
+    // Sinkronisasi bila postId berubah tanpa efek samping render berantai
+    const [prevPostId, setPrevPostId] = useState(postId);
+    if (prevPostId !== postId) {
+        setPrevPostId(postId);
+        setPost(postId ? getPostById(postId) : null);
+        setSaved(postId ? isPostSaved(postId) : false);
+    }
 
     const totalPhotos = post?.photos?.length || 1;
 
@@ -59,12 +60,13 @@ export function usePostDetail(postId) {
             const trimmed = commentText.trim();
             if (!trimmed || !post) return;
 
+            const currentUser = getCurrentUser();
             const newComment = {
                 id: `c_${Date.now()}`,
-                userId: "u_current",
-                username: "kamu",
-                avatarInitials: "KM",
-                avatarColor: "bg-blue-700",
+                userId: currentUser?.id || "u_current",
+                username: currentUser?.username || "kamu",
+                avatarInitials: currentUser?.avatarInitials || "KM",
+                avatarColor: currentUser?.avatarColor || "bg-blue-700",
                 text: trimmed,
                 createdAt: "Baru saja",
             };
