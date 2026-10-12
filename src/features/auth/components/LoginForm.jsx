@@ -9,25 +9,30 @@
  * ============================================================================
  */
 
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { AuthBrandLogo } from "./AuthBrandLogo";
 
 /**
  * Komponen form login interaktif.
  *
  * @param {object} props Properti komponen.
- * @param {string} props.email Nilai input email.
- * @param {Function} props.setEmail Setter state email.
+ * @param {string} [props.username] Nilai input username.
+ * @param {Function} [props.setUsername] Setter state username.
+ * @param {string} [props.email] Alias fallback untuk input username.
+ * @param {Function} [props.setEmail] Alias fallback setter state username.
  * @param {string} props.password Nilai input kata sandi.
  * @param {Function} props.setPassword Setter state kata sandi.
  * @param {string} props.errorMessage Pesan kesalahan validasi.
  * @param {boolean} props.isSubmitting Status loading submit.
  * @param {Function} props.onSubmit Handler submit form.
- * @param {Function} props.onGuestLogin Handler tombol akses tamu.
  * @param {Function} [props.onForgotPassword] Handler klik lupa kata sandi.
  * @param {Function} [props.onRegisterClick] Handler klik daftar akun baru.
  * @returns {JSX.Element} Formulir login.
  */
 export function LoginForm({
+    username,
+    setUsername,
     email,
     setEmail,
     password,
@@ -35,10 +40,14 @@ export function LoginForm({
     errorMessage,
     isSubmitting,
     onSubmit,
-    onGuestLogin,
     onForgotPassword,
     onRegisterClick,
 }) {
+    // Sinkronisasi input: prioritaskan username, gunakan email sebagai fallback
+    const inputValue = username !== undefined ? username : (email || "");
+    const handleInputChange = setUsername || setEmail;
+    const [showPassword, setShowPassword] = useState(false);
+
     return (
         <div className="w-full max-w-[360px] md:max-w-[400px] mx-auto flex flex-col justify-center min-h-screen py-10 px-4 sm:px-6">
             {/* Mobile Header Logo & Tagline */}
@@ -57,7 +66,7 @@ export function LoginForm({
                     Masuk
                 </h1>
                 <p className="text-sm text-gray-600 mt-1.5 font-sans">
-                    Pakai email kampus supaya postinganmu terpercaya.
+                    Pakai username atau email kampus untuk mengakses temuin.
                 </p>
             </div>
 
@@ -75,18 +84,18 @@ export function LoginForm({
             <form onSubmit={onSubmit} className="space-y-4" noValidate>
                 <div>
                     <label
-                        htmlFor="email-input"
+                        htmlFor="username-input"
                         className="block text-sm font-bold text-gray-900 mb-1.5"
                     >
-                        Email kampus
+                        Username atau Email
                     </label>
                     <input
-                        id="email-input"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="nama@kampus.ac.id"
-                        autoComplete="email"
+                        id="username-input"
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => handleInputChange && handleInputChange(e.target.value)}
+                        placeholder="misal: rina.ay atau nama@kampus.ac.id"
+                        autoComplete="username"
                         required
                         className="w-full h-12 px-3.5 rounded-lg border border-gray-300 bg-white text-[15px] text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 transition"
                     />
@@ -99,16 +108,31 @@ export function LoginForm({
                     >
                         Kata sandi
                     </label>
-                    <input
-                        id="password-input"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="••••••••"
-                        autoComplete="current-password"
-                        required
-                        className="w-full h-12 px-3.5 rounded-lg border border-gray-300 bg-white text-[15px] text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 transition"
-                    />
+                    <div className="relative">
+                        <input
+                            id="password-input"
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="••••••••"
+                            autoComplete="current-password"
+                            required
+                            className="w-full h-12 pl-3.5 pr-11 rounded-lg border border-gray-300 bg-white text-[15px] text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-blue-700 transition"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            tabIndex={-1}
+                            aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+                            className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="size-5" />
+                            ) : (
+                                <Eye className="size-5" />
+                            )}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Link Lupa Kata Sandi */}
@@ -132,25 +156,6 @@ export function LoginForm({
                 </button>
             </form>
 
-            {/* Pembatas "atau" */}
-            <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-200" />
-                </div>
-                <div className="relative flex justify-center text-xs text-gray-600">
-                    <span className="bg-white md:bg-white px-3">atau</span>
-                </div>
-            </div>
-
-            {/* Tombol Masuk Sebagai Tamu */}
-            <button
-                type="button"
-                onClick={onGuestLogin}
-                className="w-full h-12 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 active:scale-[0.99] text-gray-900 font-bold text-sm md:text-[15px] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-            >
-                Lihat-lihat tanpa akun
-            </button>
-
             {/* Footer Navigasi Daftar */}
             <p className="mt-8 text-center text-sm text-gray-600 font-sans">
                 Belum punya akun?{" "}
@@ -165,3 +170,4 @@ export function LoginForm({
         </div>
     );
 }
+

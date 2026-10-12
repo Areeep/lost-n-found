@@ -20,3 +20,9 @@ body {
   /* gray-900 */
   font-family: var(--font-sans);
 }
+
+/* Sembunyikan ikon mata bawaan browser (misal: Microsoft Edge / IE) saat mengetik kata sandi */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

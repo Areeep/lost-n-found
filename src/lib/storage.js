@@ -10,11 +10,72 @@
  */
 
 // * Kunci localStorage sesuai spesifikasi PRD §6
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
     POSTS: "temuin_posts",
     SAVED: "temuin_saved",
     CURRENT_USER: "temuin_currentUser",
 };
+
+// * Mock user terdaftar awal untuk kemudahan login / demo
+export const MOCK_USERS = [
+    {
+        id: "u1",
+        username: "rina.ay",
+        name: "Rina Ayuningtyas",
+        email: "rina.ay@kampus.ac.id",
+        password: "password123",
+        avatarInitials: "RA",
+        avatarColor: "bg-violet-600",
+    },
+    {
+        id: "u2",
+        username: "bima_k",
+        name: "Bima Kusuma",
+        email: "bima_k@kampus.ac.id",
+        password: "password123",
+        avatarInitials: "BK",
+        avatarColor: "bg-teal-700",
+    },
+];
+
+/**
+ * Mengambil sesi pengguna aktif dari localStorage.
+ *
+ * @returns {object|null} Objek data pengguna atau null bila belum login.
+ */
+export function getCurrentUser() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+        return raw ? JSON.parse(raw) : null;
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Menyimpan sesi pengguna aktif ke localStorage.
+ *
+ * @param {object} user Objek data pengguna yang berhasil login.
+ */
+export function setCurrentUser(user) {
+    try {
+        localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
+    } catch (error) {
+        console.error("Gagal menyimpan currentUser:", error);
+    }
+}
+
+/**
+ * Menghapus sesi pengguna aktif dari localStorage (logout).
+ */
+export function removeCurrentUser() {
+    try {
+        localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+    } catch (error) {
+        console.error("Gagal menghapus currentUser:", error);
+    }
+}
+
 
 // * Mock data awal bila localStorage belum terisi
 const INITIAL_POSTS = [
