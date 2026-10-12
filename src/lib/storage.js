@@ -9,6 +9,8 @@
  * ============================================================================
  */
 
+import { INITIAL_EXPLORE_POSTS } from "../features/explore/data/mockPosts";
+
 // * Kunci localStorage sesuai spesifikasi PRD §6
 export const STORAGE_KEYS = {
     POSTS: "temuin_posts",
@@ -135,13 +137,19 @@ export function getPosts() {
     try {
         const raw = localStorage.getItem(STORAGE_KEYS.POSTS);
         if (!raw) {
-            localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(INITIAL_POSTS));
-            return INITIAL_POSTS;
+            localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(INITIAL_EXPLORE_POSTS));
+            return INITIAL_EXPLORE_POSTS;
         }
-        return JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        // * Sinkronkan jika data di localStorage belum memakai foto terbaru (misal: contohKtm)
+        const needsResync = parsed.length <= 1 || !parsed.some((p) => p.id === "p5" && p.photos?.[0] === "/contohKtm.jpg");
+        if (needsResync) {
+            localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(INITIAL_EXPLORE_POSTS));
+            return INITIAL_EXPLORE_POSTS;
+        }
+        return parsed;
     } catch {
-        // ! Fallback jika JSON parsing gagal
-        return INITIAL_POSTS;
+        return INITIAL_EXPLORE_POSTS;
     }
 }
 
@@ -153,7 +161,11 @@ export function getPosts() {
  */
 export function getPostById(id) {
     const posts = getPosts();
-    return posts.find((item) => item.id === id) || null;
+    const found = posts.find((item) => item.id === id);
+    if (found) return found;
+
+    // Fallback cadangan langsung ke array mockPosts
+    return INITIAL_EXPLORE_POSTS.find((item) => item.id === id) || null;
 }
 
 /**

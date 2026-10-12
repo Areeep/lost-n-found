@@ -24,6 +24,7 @@ import { PostDetailMedia } from "./components/PostDetailMedia";
 import { PostDetailInfo } from "./components/PostDetailInfo";
 import { PostDetailComments } from "./components/PostDetailComments";
 import { PostDetailActionBar } from "./components/PostDetailActionBar";
+import { Sidebar } from "../../components/Sidebar";
 
 /**
  * Komponen tampilan lengkap halaman Detail Postingan.
@@ -62,63 +63,7 @@ export function PostDetailPage({ postId = "p1", onBack }) {
             {/* =========================================================
           DESKTOP SIDEBAR (Sesuai design.md §5 & screenshot)
           ========================================================= */}
-            <aside className="hidden md:flex flex-col w-60 bg-white border-r border-gray-200 p-6 shrink-0 justify-between">
-                <div className="space-y-6">
-                    {/* Logo temuin. */}
-                    <div className="font-heading font-extrabold text-[28px] tracking-tight text-gray-900">
-                        temuin<span className="text-orange-700">.</span>
-                    </div>
-
-                    {/* Navigasi Utama */}
-                    <nav className="space-y-1">
-                        <button
-                            type="button"
-                            onClick={onBack}
-                            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold text-gray-900 hover:bg-gray-100 transition-colors"
-                        >
-                            <House size={20} />
-                            <span>Beranda</span>
-                        </button>
-                        <button
-                            type="button"
-                            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                        >
-                            <Search size={20} />
-                            <span>Cari</span>
-                        </button>
-                        <button
-                            type="button"
-                            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                        >
-                            <Bell size={20} />
-                            <span>Notifikasi</span>
-                        </button>
-                        <button
-                            type="button"
-                            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                        >
-                            <MessageSquare size={20} />
-                            <span>Pesan</span>
-                        </button>
-                        <button
-                            type="button"
-                            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-                        >
-                            <User size={20} />
-                            <span>Profil</span>
-                        </button>
-                    </nav>
-
-                    {/* Tombol Posting Barang */}
-                    <button
-                        type="button"
-                        className="w-full h-12 rounded-xl bg-gray-900 text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors shadow-sm"
-                    >
-                        <Plus size={18} />
-                        <span>Posting barang</span>
-                    </button>
-                </div>
-            </aside>
+            <Sidebar activeItem="cari" />
 
             {/* =========================================================
           KONTEN UTAMA (RESPONSIF MOBILE & DESKTOP)
