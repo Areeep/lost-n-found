@@ -5,7 +5,8 @@
  *
  * Description:
  * Router konfigurasi utama temuin. Menetapkan rute publik (/login)
- * dan rute terlindungi di bawah ProtectedRoute guard.
+ * serta rute terproteksi (/post/:id, /explore, /create, /profile)
+ * di bawah ProtectedRoute guard. Rute root (/) menampilkan katalog barang.
  * ============================================================================
  */
 
@@ -13,16 +14,18 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "./features/auth/LoginPage";
 import { ProtectedRoute } from "./features/auth/components/ProtectedRoute";
 import { PostDetailPage } from "./features/post-detail/PostDetailPage";
-import { LoginPage } from "./features/auth/LoginPage";
-import { ProfilePage } from "./features/profile/ProfilePage";
+import { ExplorePage } from "./features/explore/ExplorePage";
 import { CreatePostPage } from "./features/posts/pages/CreatePostPage";
+import { ProfilePage } from "./features/profile/ProfilePage";
+import { getCurrentUser, removeCurrentUser } from "./lib/storage";
 
 /**
  * Komponen root aplikasi temuin.
  *
- * @returns {JSX.Element} Pohon rute aplikasi.
+ * @returns {JSX.Element} Pohon konfigurasi rute aplikasi.
  */
 function App() {
+  // * Handler logout terpusat: bersihkan storage lalu redirect ke /login
   const handleLogout = () => {
     removeCurrentUser();
     window.location.href = "/login";
@@ -43,20 +46,41 @@ function App() {
           }
         />
 
-        {/* Rute Terproteksi: Semua halaman wajib login */}
+        {/* ! Rute Terproteksi: Semua halaman wajib autentikasi */}
         <Route element={<ProtectedRoute />}>
-          <Route
-            path="/"
-            element={<PostDetailPage postId="p1" onBack={handleLogout} />}
-          />
+          {/* Beranda: Menampilkan daftar postingan barang */}
+          <Route path="/" element={<ExplorePage />} />
+
+          {/* Detail Postingan */}
           <Route
             path="/post/:id"
             element={<PostDetailPage onBack={handleLogout} />}
           />
-          {/* Rute fitur lain (explore, create, profile) dimasukkan di dalam blok ini */}
+
+          {/* Eksplorasi & Pencarian Barang */}
+          <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/cari" element={<ExplorePage />} />
+
+          {/* Buat Postingan Barang */}
+          <Route path="/create" element={<CreatePostPage />} />
+          <Route path="/buat" element={<CreatePostPage />} />
+
+          {/* Profil Pengguna */}
+          <Route
+            path="/profile"
+            element={<ProfilePage onLogout={handleLogout} />}
+          />
+          <Route
+            path="/profil"
+            element={<ProfilePage onLogout={handleLogout} />}
+          />
+          <Route
+            path="/profile/:username"
+            element={<ProfilePage onLogout={handleLogout} />}
+          />
         </Route>
 
-        {/* Fallback route tidak dikenal */}
+        {/* ? Fallback rute tidak dikenal diarahkan kembali ke root */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

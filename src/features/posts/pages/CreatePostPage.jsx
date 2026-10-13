@@ -1,8 +1,16 @@
 /**
- * @fileoverview Main Page Component for "Buat Postingan".
- * Harmonizes mobile and desktop viewport designs faithfully with mockups.
+ * ============================================================================
+ * Component   : CreatePostPage
+ * Layer       : Feature Page
+ *
+ * Description:
+ * Halaman pembuatan postingan barang hilang atau ditemukan.
+ * Mengintegrasikan photo uploader, status picker, validasi input,
+ * dan navigasi otomatis kembali ke Beranda saat postingan berhasil dibuat.
+ * ============================================================================
  */
 
+import { useNavigate } from "react-router-dom";
 import { Sidebar } from "../../../components/Sidebar";
 import { PhotoUploader } from "../components/PhotoUploader";
 import { StatusPicker } from "../components/StatusPicker";
@@ -10,12 +18,25 @@ import { useCreatePost } from "../hooks/useCreatePost";
 import { ITEM_CATEGORIES, STATUS_CONFIG } from "../constants/postConstants";
 
 /**
- * Fullscreen Buat Postingan page.
- * @param {Object} props
- * @param {() => void} [props.onCancel] - Navigation callback when user cancels.
- * @param {(post: Object) => void} [props.onCreated] - Callback on post completion.
+ * Komponen halaman penuh Buat Postingan.
+ *
+ * @param {object} props Properti komponen.
+ * @param {Function} [props.onCancel] Callback pembatalan navigasi.
+ * @param {Function} [props.onCreated] Callback kustom saat postingan berhasil disimpan.
+ * @returns {JSX.Element} Halaman formulir buat postingan.
  */
 export function CreatePostPage({ onCancel, onCreated }) {
+  const navigate = useNavigate();
+
+  // * Handler pembatalan formulir
+  const handleCancelClick = () => {
+    if (onCancel) {
+      onCancel();
+    } else {
+      navigate("/");
+    }
+  };
+
   const {
     values,
     errors,
@@ -27,8 +48,12 @@ export function CreatePostPage({ onCancel, onCreated }) {
     handleSubmit,
   } = useCreatePost({
     onSuccess: (post) => {
-      alert("Postingan berhasil disimpan!");
-      if (onCreated) onCreated(post);
+      // ? Alihkan langsung ke Beranda agar postingan baru terlihat di feed
+      if (onCreated) {
+        onCreated(post);
+      } else {
+        navigate("/");
+      }
     },
   });
 
@@ -36,16 +61,16 @@ export function CreatePostPage({ onCancel, onCreated }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-100 font-sans text-gray-900 md:flex-row">
-      {/* Desktop Sidebar */}
+      {/* Sidebar Navigasi Desktop */}
       <Sidebar />
 
-      {/* Main Container */}
+      {/* Kontainer Utama */}
       <main className="flex min-w-0 flex-1 flex-col items-center md:px-8 md:py-10">
-        {/* --- MOBILE TOP NAVBAR (< md) --- */}
+        {/* --- Top Navbar Layar Ponsel (< md) --- */}
         <header className="sticky top-0 z-10 flex h-14 w-full items-center justify-between border-b border-gray-200 bg-white px-4 md:hidden">
           <button
             type="button"
-            onClick={onCancel}
+            onClick={handleCancelClick}
             className="flex min-h-[44px] cursor-pointer items-center text-sm font-semibold text-gray-900"
           >
             Batal
@@ -63,9 +88,9 @@ export function CreatePostPage({ onCancel, onCreated }) {
           </button>
         </header>
 
-        {/* Content Box */}
+        {/* Box Konten Formulir */}
         <div className="w-full max-w-5xl">
-          {/* Desktop Title & Subtitle Header */}
+          {/* Header Judul Desktop */}
           <div className="mb-6 hidden items-start justify-between md:flex">
             <div>
               <h1 className="font-heading text-3xl font-extrabold text-gray-900">
@@ -77,14 +102,14 @@ export function CreatePostPage({ onCancel, onCreated }) {
             </div>
             <button
               type="button"
-              onClick={onCancel}
+              onClick={handleCancelClick}
               className="cursor-pointer pt-1 text-sm font-bold text-gray-900 transition hover:text-gray-600"
             >
               Batal
             </button>
           </div>
 
-          {/* Form Card */}
+          {/* Kartu Formulir */}
           <form
             onSubmit={handleSubmit}
             noValidate
@@ -97,7 +122,7 @@ export function CreatePostPage({ onCancel, onCreated }) {
             )}
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:gap-8">
-              {/* LEFT COLUMN: Photo Uploading (5 cols on desktop) */}
+              {/* Kolom Kiri: Unggah Foto (5 kolom desktop) */}
               <div className="md:col-span-5">
                 <PhotoUploader
                   photos={values.photos}
@@ -108,7 +133,7 @@ export function CreatePostPage({ onCancel, onCreated }) {
                 />
               </div>
 
-              {/* RIGHT COLUMN: Form Inputs (7 cols on desktop) */}
+              {/* Kolom Kanan: Kolom Input (7 kolom desktop) */}
               <div className="space-y-5 md:col-span-7">
                 {/* 1. Status Picker */}
                 <StatusPicker
@@ -131,9 +156,8 @@ export function CreatePostPage({ onCancel, onCreated }) {
                     value={values.itemName}
                     onChange={handleInputChange}
                     placeholder="cth. Dompet kulit coklat"
-                    className={`h-12 w-full rounded-lg border px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${
-                      errors.itemName ? "border-red-600" : "border-gray-300"
-                    }`}
+                    className={`h-12 w-full rounded-lg border px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${errors.itemName ? "border-red-600" : "border-gray-300"
+                      }`}
                   />
                   {errors.itemName && (
                     <p className="mt-1 text-xs font-medium text-red-600">
@@ -142,9 +166,8 @@ export function CreatePostPage({ onCancel, onCreated }) {
                   )}
                 </div>
 
-                {/* 3. Kategori & Tanggal (2 columns) */}
+                {/* 3. Kategori & Tanggal */}
                 <div className="grid grid-cols-2 gap-3">
-                  {/* Kategori */}
                   <div>
                     <label
                       htmlFor="category"
@@ -157,9 +180,8 @@ export function CreatePostPage({ onCancel, onCreated }) {
                       name="category"
                       value={values.category}
                       onChange={handleInputChange}
-                      className={`h-12 w-full rounded-lg border bg-white px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${
-                        errors.category ? "border-red-600" : "border-gray-300"
-                      }`}
+                      className={`h-12 w-full rounded-lg border bg-white px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${errors.category ? "border-red-600" : "border-gray-300"
+                        }`}
                     >
                       <option value="">Pilih...</option>
                       {ITEM_CATEGORIES.map((cat) => (
@@ -175,7 +197,6 @@ export function CreatePostPage({ onCancel, onCreated }) {
                     )}
                   </div>
 
-                  {/* Tanggal */}
                   <div>
                     <label
                       htmlFor="date"
@@ -189,9 +210,8 @@ export function CreatePostPage({ onCancel, onCreated }) {
                       type="date"
                       value={values.date}
                       onChange={handleInputChange}
-                      className={`h-12 w-full rounded-lg border bg-white px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${
-                        errors.date ? "border-red-600" : "border-gray-300"
-                      }`}
+                      className={`h-12 w-full rounded-lg border bg-white px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${errors.date ? "border-red-600" : "border-gray-300"
+                        }`}
                     />
                     {errors.date && (
                       <p className="mt-1 text-xs font-medium text-red-600">
@@ -216,9 +236,8 @@ export function CreatePostPage({ onCancel, onCreated }) {
                     value={values.location}
                     onChange={handleInputChange}
                     placeholder={statusCfg.locationPlaceholder}
-                    className={`h-12 w-full rounded-lg border px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${
-                      errors.location ? "border-red-600" : "border-gray-300"
-                    }`}
+                    className={`h-12 w-full rounded-lg border px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${errors.location ? "border-red-600" : "border-gray-300"
+                      }`}
                   />
                   {errors.location && (
                     <p className="mt-1 text-xs font-medium text-red-600">
@@ -227,7 +246,7 @@ export function CreatePostPage({ onCancel, onCreated }) {
                   )}
                 </div>
 
-                {/* 5. Ciri-ciri & keterangan */}
+                {/* 5. Ciri-ciri & Deskripsi */}
                 <div>
                   <label
                     htmlFor="description"
@@ -246,7 +265,7 @@ export function CreatePostPage({ onCancel, onCreated }) {
                   />
                 </div>
 
-                {/* 6. Kontak (WhatsApp) */}
+                {/* 6. Kontak WhatsApp */}
                 <div>
                   <label
                     htmlFor="contactWhatsapp"
@@ -261,11 +280,10 @@ export function CreatePostPage({ onCancel, onCreated }) {
                     value={values.contactWhatsapp}
                     onChange={handleInputChange}
                     placeholder="08xx-xxxx-xxxx"
-                    className={`h-12 w-full rounded-lg border px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${
-                      errors.contactWhatsapp
+                    className={`h-12 w-full rounded-lg border px-3 text-sm text-gray-900 transition focus:ring-2 focus:ring-gray-900 focus:outline-none ${errors.contactWhatsapp
                         ? "border-red-600"
                         : "border-gray-300"
-                    }`}
+                      }`}
                   />
                   <p className="mt-1.5 text-xs text-gray-600">
                     Hanya terlihat oleh orang yang menghubungimu lewat chat.
@@ -277,7 +295,7 @@ export function CreatePostPage({ onCancel, onCreated }) {
                   )}
                 </div>
 
-                {/* Submit Button */}
+                {/* Tombol Simpan */}
                 <div className="pt-2">
                   <button
                     type="submit"

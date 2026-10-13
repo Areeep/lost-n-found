@@ -4,21 +4,22 @@
  * Layer       : Feature Hook
  *
  * Description:
- * Mengelola state input pencarian kata kunci, pemilihan tab status (Semua /
- * Hilang / Ditemukan), dan kategori barang dengan komputasi filter terisolasi.
+ * Mengelola state input pencarian kata kunci, filter status, dan filter kategori.
+ * Membaca data postingan dari storage lokal agar postingan baru otomatis tampil.
  * ============================================================================
  */
 
 import { useState, useMemo } from "react";
-import { INITIAL_EXPLORE_POSTS } from "../data/mockPosts";
+import { getPosts } from "../../../lib/storage";
 
 /**
- * Hook pengelola logika filter daftar pencarian barang.
+ * Hook pengelola logika pencarian dan penyaringan barang temuin.
  *
- * @returns {object} Kumpulan state pencarian dan daftar barang hasil filter.
+ * @returns {object} Kumpulan state filter dan postingan yang tersaring.
  */
 export function useExplore() {
-    const [posts] = useState(INITIAL_EXPLORE_POSTS);
+    // * Inisialisasi dari localStorage agar postingan baru langsung muncul di urutan pertama
+    const [posts] = useState(() => getPosts());
     const [searchQuery, setSearchQuery] = useState("");
     const [statusFilter, setStatusFilter] = useState("Semua");
     const [categoryFilter, setCategoryFilter] = useState("Semua");
