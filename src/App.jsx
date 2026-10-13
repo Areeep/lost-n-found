@@ -13,7 +13,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "./features/auth/LoginPage";
 import { ProtectedRoute } from "./features/auth/components/ProtectedRoute";
 import { PostDetailPage } from "./features/post-detail/PostDetailPage";
-import { getCurrentUser, removeCurrentUser } from "./lib/storage";
+import { LoginPage } from "./features/auth/LoginPage";
+import { ProfilePage } from "./features/profile/ProfilePage";
+import { CreatePostPage } from "./features/posts/pages/CreatePostPage";
 
 /**
  * Komponen root aplikasi temuin.
