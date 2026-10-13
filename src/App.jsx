@@ -51,11 +51,8 @@ function App() {
           {/* Beranda: Menampilkan daftar postingan barang */}
           <Route path="/" element={<ExplorePage />} />
 
-          {/* Detail Postingan */}
-          <Route
-            path="/post/:id"
-            element={<PostDetailPage onBack={handleLogout} />}
-          />
+          {/* Detail Postingan: Navigasi dinamis berdasarkan id URL */}
+          <Route path="/post/:id" element={<PostDetailPage />} />
 
           {/* Eksplorasi & Pencarian Barang */}
           <Route path="/explore" element={<ExplorePage />} />

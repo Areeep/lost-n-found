@@ -1,125 +1,112 @@
-  /**                                                                        
-     *                                                                         
-  ============================================================================ 
-     * Hook        : useProfile                                                
-     * Layer       : Feature Hook                                              
-     *                                                                         
-     * Description:                                                            
-     * Mengelola state profil pengguna, tab aktif, statistik postingan,        
-     * dan penyaringan data item untuk grid profil.                            
-     *                                                                         
-  ============================================================================ 
-     */                                                                        
-                                                                               
-    import { useState, useMemo } from "react";                                 
-    import { getPosts, isPostSaved } from "../../../lib/storage";              
-                                                                               
-    // * Data mock pengguna sesuai screenshot & PRD §6                         
-    const DEFAULT_USER = {                                                     
-      id: "u1",                                                                
-      username: "rina.ay",                                                     
-      name: "Rina Ayuningtyas",                                                
-      bio: "Teknik Informatika '24 · suka lupa naruh barang",                  
-      avatarInitials: "RA",                                                    
-      avatarColor: "bg-violet-600",                                            
-    };                                                                         
-                                                                               
-    // * Mock item visual spesifik sesuai screenshot bila belum ada di storage 
-    const FALLBACK_PROFILE_POSTS = [                                           
-      {                                                                        
-        id: "p1",                                                              
-        name: "Dompet coklat",                                                 
-        isReturned: false,                                                     
-        bgColor: "bg-[#fde4c7]",                                               
-        category: "Dompet",                                                    
-      },                                                                       
-      {                                                                        
-        id: "p2",                                                              
-        name: "Botol minum",                                                   
-        isReturned: true,                                                      
-        bgColor: "bg-[#526a6e]",                                               
-        category: "Lainnya",                                                   
-      },                                                                       
-      {                                                                        
-        id: "p3",                                                              
-        name: "Charger laptop",                                                
-        isReturned: true,                                                      
-        bgColor: "bg-[#575f6d]",                                               
-        category: "Elektronik",                                                
-      },                                                                       
-      {                                                                        
-        id: "p4",                                                              
-        name: "Payung",                                                        
-        isReturned: false,                                                     
-        bgColor: "bg-[#dce9fc]",                                               
-        category: "Lainnya",                                                   
-      },                                                                       
-      {                                                                        
-        id: "p5",                                                              
-        name: "Kartu parkir",                                                  
-        isReturned: true,                                                      
-        bgColor: "bg-[#64685e]",                                               
-        category: "Kartu",                                                     
-      },                                                                       
-      {                                                                        
-        id: "p6",                                                              
-        name: "Jaket abu",                                                     
-        isReturned: false,                                                     
-        bgColor: "bg-[#ece7fd]",                                               
-        category: "Pakaian",                                                   
-      },                                                                       
-    ];                                                                         
-                                                                               
-    /**                                                                        
-     * Hook kustom untuk mengelola data dan interaksi halaman profil.          
-     *                                                                         
-     * @param {string} [username="rina.ay"] Username profil yang dibuka.       
-     * @returns {object} State profil, daftar postingan, tab aktif, dan handler
-  aksi.                                                                        
-     */                                                                        
-    export function useProfile(username = "rina.ay") {                         
-      const [activeTab, setActiveTab] = useState("posts"); // "posts" | "saved"
-                                                                               
-      // * Membaca data storage lokal                                          
-      const allPosts = useMemo(() => {                                         
-        const stored = getPosts();                                             
-        return stored.length > 0 ? stored : FALLBACK_PROFILE_POSTS;            
-      }, []);                                                                  
-                                                                               
-      // ? Mengelompokkan item postingan milik user                            
-      const userPosts = useMemo(() => {                                        
-        const filtered = allPosts.filter(                                      
-          (item) => !item.userId || item.userId === DEFAULT_USER.id            
-        );                                                                     
-        return filtered.length > 0 ? filtered : FALLBACK_PROFILE_POSTS;        
-      }, [allPosts]);                                                          
-                                                                               
-      // ? Mengambil item yang disimpan pengguna                               
-      const savedPosts = useMemo(() => {                                       
-        return allPosts.filter((item) => isPostSaved(item.id));                
-      }, [allPosts]);                                                          
-                                                                               
-      // * Menghitung ringkasan statistik                                      
-      const stats = useMemo(() => {                                            
-        const totalPosts = userPosts.length;                                   
-        const returnedCount = userPosts.filter((item) => item.isReturned).length                                               
-        const savedCount = savedPosts.length > 0 ? savedPosts.length : 4; //  Mock 4 sesuai screenshot                                                     
-                                                                               
-        return {                                                               
-          posts: totalPosts,                                                   
-          returned: returnedCount,                                             
-          saved: savedCount,                                                   
-        };                                                                     
-      }, [userPosts, savedPosts]);                                             
-                                                                               
-      // ! Menentukan daftar item aktif berdasarkan tab yang dipilih           
-      const displayPosts = activeTab === "posts" ? userPosts : savedPosts;     
-                                                                               
-      return {                                                                 
-        user: DEFAULT_USER,                                                    
-        activeTab,                                                             
-        setActiveTab,                                                          
-        stats,                                                                 
-        posts: displayPosts,                                                   
-      };                                                                       
-    }   
+/**
+ * ============================================================================
+ * Hook        : useProfile
+ * Layer       : Feature Hook
+ *
+ * Description:
+ * Mengelola state profil pengguna, statistik postingan,
+ * serta penyaringan data postingan dari mockPosts dan storage.
+ * ============================================================================
+ */
+
+import { useState, useMemo, useCallback } from "react";
+import { getPosts, getCurrentUser, setCurrentUser } from "../../../lib/storage";
+import { INITIAL_EXPLORE_POSTS } from "../../explore/data/mockPosts";
+
+// * Data fallback profil bila sesi pengguna tidak ditemukan
+const DEFAULT_USER = {
+  id: "u1",
+  username: "rina.ay",
+  name: "Rina Ayuningtyas",
+  bio: "Teknik Informatika '24 · suka lupa naruh barang",
+  avatarInitials: "RA",
+  avatarColor: "bg-violet-600",
+};
+
+/**
+ * Hook kustom untuk mengelola data dan interaksi halaman profil.
+ *
+ * @returns {object} Objek data profil, aksi updateProfile, stats, dan postingan.
+ */
+export function useProfile() {
+  // * State data profil pengguna aktif (diinisialisasi dari storage)
+  const [user, setUser] = useState(() => {
+    const session = getCurrentUser();
+    if (!session) return DEFAULT_USER;
+
+    return {
+      id: session.id || DEFAULT_USER.id,
+      username: session.username || DEFAULT_USER.username,
+      name: session.name || session.username || DEFAULT_USER.name,
+      bio: session.bio || DEFAULT_USER.bio,
+      avatarInitials:
+        session.avatarInitials ||
+        (session.username
+          ? session.username.slice(0, 2).toUpperCase()
+          : DEFAULT_USER.avatarInitials),
+      avatarColor: session.avatarColor || DEFAULT_USER.avatarColor,
+    };
+  });
+
+  // ? Memperbarui data profil, menghitung inisial baru, dan persistensi ke storage
+  const updateProfile = useCallback((updatedData) => {
+    setUser((prevUser) => {
+      const cleanName = updatedData.name?.trim() || prevUser.name;
+      const nameParts = cleanName.split(" ").filter(Boolean);
+      const newInitials =
+        nameParts.length > 1
+          ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase()
+          : cleanName.slice(0, 2).toUpperCase();
+
+      const nextUser = {
+        ...prevUser,
+        ...updatedData,
+        name: cleanName,
+        avatarInitials: newInitials || prevUser.avatarInitials,
+      };
+
+      // * Simpan ke localStorage agar bertahan saat refresh
+      setCurrentUser(nextUser);
+      return nextUser;
+    });
+  }, []);
+
+  // * Ambil seluruh postingan: prioritas storage, fallback INITIAL_EXPLORE_POSTS
+  const allPosts = useMemo(() => {
+    const stored = getPosts();
+    return stored.length > 0 ? stored : INITIAL_EXPLORE_POSTS;
+  }, []);
+
+  // ? Filter postingan milik pengguna aktif
+  const userPosts = useMemo(() => {
+    const filtered = allPosts.filter(
+      (item) => item.userId === user.id || item.user?.id === user.id,
+    );
+
+    if (filtered.length > 0) return filtered;
+
+    // Fallback bila user demo belum memiliki postingan, tampilkan postingan u1
+    const fallbackItems = INITIAL_EXPLORE_POSTS.filter(
+      (item) => item.userId === user.id || item.userId === "u1",
+    );
+
+    return fallbackItems.length > 0
+      ? fallbackItems
+      : INITIAL_EXPLORE_POSTS.slice(0, 6);
+  }, [allPosts, user.id]);
+
+  // * Hitung statistik postingan (postingan dan sudah kembali)
+  const stats = useMemo(() => {
+    return {
+      posts: userPosts.length,
+      returned: userPosts.filter((item) => item.isReturned).length,
+    };
+  }, [userPosts]);
+
+  return {
+    user,
+    updateProfile,
+    stats,
+    posts: userPosts,
+  };
+}
