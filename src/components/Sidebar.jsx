@@ -10,7 +10,7 @@
  */
 
 import { Link, useLocation } from "react-router-dom";
-import { House, Search, Bell, User, Plus } from "lucide-react";
+import { House, Search, User, Plus } from "lucide-react";
 
 /**
  * Komponen Sidebar desktop aplikasi temuin.
@@ -70,16 +70,6 @@ export function Sidebar({ activeItem }) {
           />
           <span>Cari</span>
         </Link>
-
-        {/* Notifikasi */}
-        <button
-          type="button"
-          onClick={() => alert("Fitur notifikasi sedang disiapkan.")}
-          className="flex w-full items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
-        >
-          <Bell className="size-5" />
-          <span>Notifikasi</span>
-        </button>
 
         {/* Profil */}
         <Link
