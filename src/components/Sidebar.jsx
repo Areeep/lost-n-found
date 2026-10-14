@@ -13,7 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 import { House, Search, User, Plus } from "lucide-react";
 
 /**
- * Komponen Sidebar desktop aplikasi temuin.
+ * Komponen Sidebar desktop aplikasi orbit.
  *
  * @param {object} props Properti komponen.
  * @param {string} [props.activeItem] Nama menu aktif eksplisit ("beranda" | "cari" | "profil").
@@ -28,16 +28,16 @@ export function Sidebar({ activeItem }) {
     (location.pathname.startsWith("/profil")
       ? "profil"
       : location.pathname.startsWith("/cari") ||
-          location.pathname.startsWith("/post")
+        location.pathname.startsWith("/post")
         ? "cari"
         : "beranda");
 
   return (
     <aside className="sticky top-0 z-20 hidden h-screen w-64 shrink-0 flex-col border-r border-gray-200 bg-white p-6 md:flex">
-      {/* Logo temuin. */}
+      {/* Logo orbit. */}
       <Link to="/cari" className="mb-8 inline-block">
         <span className="font-heading text-2xl font-extrabold tracking-tight text-gray-900">
-          temuin<span className="text-orange-700">.</span>
+          orbit<span className="text-orange-700">.</span>
         </span>
       </Link>
 
@@ -46,11 +46,10 @@ export function Sidebar({ activeItem }) {
         {/* Beranda */}
         <Link
           to="/cari"
-          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${
-            currentActive === "beranda"
+          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${currentActive === "beranda"
               ? "bg-gray-100 font-bold text-gray-900"
               : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-          }`}
+            }`}
         >
           <House className="size-5" />
           <span>Beranda</span>
@@ -59,11 +58,10 @@ export function Sidebar({ activeItem }) {
         {/* Cari */}
         <Link
           to="/cari"
-          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${
-            currentActive === "cari"
+          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${currentActive === "cari"
               ? "bg-gray-100 font-bold text-gray-900"
               : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-          }`}
+            }`}
         >
           <Search
             className={`size-5 ${currentActive === "cari" ? "stroke-[2.5]" : ""}`}
@@ -74,11 +72,10 @@ export function Sidebar({ activeItem }) {
         {/* Profil */}
         <Link
           to="/profil"
-          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${
-            currentActive === "profil"
+          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${currentActive === "profil"
               ? "bg-gray-100 font-bold text-gray-900"
               : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-          }`}
+            }`}
         >
           <User
             className={`size-5 ${currentActive === "profil" ? "stroke-[2.5]" : ""}`}

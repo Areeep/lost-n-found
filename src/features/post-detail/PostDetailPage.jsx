@@ -5,18 +5,18 @@
  *
  * Description:
  * Halaman utama detail postingan yang menyatukan media carousel, rincian barang,
- * riwayat komentar, serta bottom sticky bar pada mobile dan sidebar pada desktop.
- * Mengambil ID postingan dari URL params secara dinamis.
+ * riwayat komentar, menu opsi postingan, serta action bar kontak poster.
  * ============================================================================
  */
 
 import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft, Ellipsis } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { usePostDetail } from "./hooks/usePostDetail";
 import { PostDetailMedia } from "./components/PostDetailMedia";
 import { PostDetailInfo } from "./components/PostDetailInfo";
 import { PostDetailComments } from "./components/PostDetailComments";
 import { PostDetailActionBar } from "./components/PostDetailActionBar";
+import { PostOptionsMenu } from "./components/PostOptionsMenu";
 import { Sidebar } from "../../components/Sidebar";
 
 /**
@@ -31,7 +31,6 @@ export function PostDetailPage({ postId, onBack }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // * Prioritaskan prop postId jika ada, fallback ke URL params id, fallback "p1"
   const activePostId = postId || id || "p1";
 
   const {
@@ -44,12 +43,9 @@ export function PostDetailPage({ postId, onBack }) {
     commentText,
     setCommentText,
     handleAddComment,
-    saved,
-    handleToggleSave,
     handleOpenContact,
   } = usePostDetail(activePostId);
 
-  // * Handler kembali: jika tidak ada onBack kustom, kembali ke halaman sebelumnya
   const handleBack = () => {
     if (onBack) {
       onBack();
@@ -78,18 +74,13 @@ export function PostDetailPage({ postId, onBack }) {
           <button
             type="button"
             onClick={handleBack}
-            className="font-heading flex items-center gap-2 text-base font-bold text-gray-900"
+            className="font-heading flex items-center gap-2 text-base font-bold text-gray-900 cursor-pointer"
           >
             <ChevronLeft size={22} />
             <span>Postingan</span>
           </button>
-          <button
-            type="button"
-            aria-label="Opsi postingan"
-            className="flex size-10 items-center justify-center text-gray-600"
-          >
-            <Ellipsis size={22} />
-          </button>
+          {/* * Menu opsi share & report pada header mobile */}
+          <PostOptionsMenu postName={post.name} iconSize={22} />
         </div>
 
         <div className="mx-auto w-full max-w-6xl flex-1 p-0 md:p-8">
@@ -135,10 +126,8 @@ export function PostDetailPage({ postId, onBack }) {
               {/* Action Bar Desktop */}
               <div className="hidden border-t border-gray-100 pt-4 md:block">
                 <PostDetailActionBar
-                  saved={saved}
                   status={post.status}
                   ownerUsername={post.user?.username || "anonim"}
-                  onToggleSave={handleToggleSave}
                   onContact={handleOpenContact}
                 />
               </div>
@@ -149,10 +138,8 @@ export function PostDetailPage({ postId, onBack }) {
         {/* Mobile Sticky Action Bar */}
         <div className="sticky bottom-0 z-20 border-t border-gray-200 bg-white p-3 md:hidden">
           <PostDetailActionBar
-            saved={saved}
             status={post.status}
             ownerUsername={post.user?.username || "anonim"}
-            onToggleSave={handleToggleSave}
             onContact={handleOpenContact}
           />
         </div>

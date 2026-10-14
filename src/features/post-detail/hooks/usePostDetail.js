@@ -5,7 +5,7 @@
  *
  * Description:
  * Mengelola state interaktif detail postingan:
- * navigasi karusel foto, tambah komentar, toggle bookmark, dan kontak WA.
+ * navigasi karusel foto, tambah komentar, dan kontak WhatsApp ke poster.
  * ============================================================================
  */
 
@@ -87,7 +87,7 @@ export function usePostDetail(postId) {
         setSaved(nextSavedState);
     }, [post]);
 
-    // ? Membuka link WhatsApp secara langsung sesuai nomor kontak poster
+    // ? Membuka link WhatsApp secara langsung sesuai nomor kontak poster di orbit
     const handleOpenContact = useCallback(() => {
         if (!post?.contact) return;
         const cleanPhone = post.contact.replace(/\D/g, "");
@@ -96,7 +96,7 @@ export function usePostDetail(postId) {
             : cleanPhone;
 
         const message = encodeURIComponent(
-            `Halo ${post.user.name}, saya melihat postingan Anda mengenai "${post.name}" di temuin.`
+            `Halo ${post.user.name}, saya melihat postingan Anda mengenai "${post.name}" di orbit.`
         );
         window.open(`https://wa.me/${formattedPhone}?text=${message}`, "_blank");
     }, [post]);

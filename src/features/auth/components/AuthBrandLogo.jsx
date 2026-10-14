@@ -4,15 +4,15 @@
  * Layer       : Feature Component
  *
  * Description:
- * Menampilkan logo resmi "temuin." dengan titik oranye khas status lost.
+ * Menampilkan logo resmi "orbit." dengan titik oranye khas status lost.
  * ============================================================================
  */
 
 /**
- * Komponen teks logo temuin.
+ * Komponen teks logo orbit.
  *
  * @param {object} props Properti komponen.
- * @param {"light"|"dark"} [props.theme="dark"] Tema teks logo (light = teks putih, dark = teks hitam).
+ * @param {"light"|"dark"} [props.theme="dark"] Tema teks logo (light = putih, dark = hitam).
  * @param {string} [props.className=""] Kelas CSS tambahan.
  * @returns {JSX.Element} Elemen logo.
  */
@@ -24,7 +24,7 @@ export function AuthBrandLogo({ theme = "dark", className = "" }) {
         <span
             className={`font-heading font-extrabold tracking-tight text-3xl select-none ${textColor} ${className}`}
         >
-            temuin<span className={dotColor}>.</span>
+            orbit<span className={dotColor}>.</span>
         </span>
     );
 }

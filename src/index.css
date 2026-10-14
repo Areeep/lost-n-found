@@ -4,10 +4,17 @@
   --font-heading: "Bricolage Grotesque", sans-serif;
   --font-sans: "Plus Jakarta Sans", sans-serif;
 
+  /* * Konfigurasi Warna Brand & Primary Baru: #1351AA */
+  --color-primary: #1351AA;
+  --color-primary-hover: #0e3d82;
+  --color-blue-700: #1351AA;
+  --color-blue-800: #0e3d82;
+  --color-blue-900: #0b2b5c;
+
   --color-lost: var(--color-orange-700);
   --color-lost-soft: var(--color-orange-50);
-  --color-found: var(--color-blue-700);
-  --color-found-soft: var(--color-blue-50);
+  --color-found: #1351AA;
+  --color-found-soft: #eef4fc;
   --color-ink: var(--color-gray-900);
   --color-muted: var(--color-gray-600);
 }
@@ -15,14 +22,12 @@
 body {
   margin: 0;
   background-color: #f3f4f6;
-  /* gray-100 */
   color: #111827;
-  /* gray-900 */
   font-family: var(--font-sans);
 }
 
-/* Sembunyikan ikon mata bawaan browser (misal: Microsoft Edge / IE) saat mengetik kata sandi */
+/* Sembunyikan ikon bawaan browser saat input password */
 input::-ms-reveal,
 input::-ms-clear {
   display: none;
-}
+}

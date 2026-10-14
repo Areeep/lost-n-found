@@ -4,12 +4,12 @@
  * Layer       : Feature Component
  *
  * Description:
- * Menampilkan informasi pemilik postingan, judul barang,
- * ringkasan spesifikasi (kategori, lokasi, waktu, ciri-ciri), dan deskripsi.
+ * Menampilkan informasi pemilik postingan, menu opsi titik tiga,
+ * judul barang, ringkasan spesifikasi, dan deskripsi rincian barang.
  * ============================================================================
  */
 
-import { Ellipsis } from "lucide-react";
+import { PostOptionsMenu } from "./PostOptionsMenu";
 
 /**
  * Komponen rincian teks barang dan informasi pengguna.
@@ -23,13 +23,12 @@ export function PostDetailInfo({ post }) {
 
   return (
     <div className="space-y-4">
-      {/* Header Pemilik & Menu */}
+      {/* Header Pemilik & Menu Titik Tiga */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div
-            className={`flex size-10 items-center justify-center rounded-full text-sm font-bold text-white ${
-              post.user?.avatarColor || "bg-violet-600"
-            }`}
+            className={`flex size-10 items-center justify-center rounded-full text-sm font-bold text-white ${post.user?.avatarColor || "bg-violet-600"
+              }`}
           >
             {post.user?.avatarInitials || "U"}
           </div>
@@ -43,13 +42,8 @@ export function PostDetailInfo({ post }) {
           </div>
         </div>
 
-        <button
-          type="button"
-          aria-label="Opsi postingan"
-          className="flex size-10 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
-        >
-          <Ellipsis size={20} />
-        </button>
+        {/* * Menu titik tiga berisi opsi Bagikan dan Laporkan */}
+        <PostOptionsMenu postName={post.name} iconSize={20} />
       </div>
 
       {/* Judul Barang */}
