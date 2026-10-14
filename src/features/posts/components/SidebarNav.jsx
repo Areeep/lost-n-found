@@ -25,7 +25,7 @@ export function SidebarNav({ onCreatePostClick }) {
         {/* Brand Logo */}
         <div className="mb-8 flex items-center gap-1">
           <span className="font-heading text-[28px] font-extrabold tracking-tight text-gray-900">
-            temuin
+            orbit
           </span>
           <span className="font-heading text-[28px] font-extrabold text-orange-700">
             .

@@ -62,39 +62,42 @@ export function getCurrentUser() {
 export function setCurrentUser(user) {
     try {
         localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
-    } catch (error) {
-        console.error("Gagal menyimpan currentUser:", error);
+    } catch {
+        // Fallback hening jika penyimpanan gagal
     }
 }
 
 /**
- * Menghapus sesi pengguna aktif dari localStorage (logout).
+ * Menghapus sesi pengguna aktif saat logout.
  */
 export function removeCurrentUser() {
     try {
         localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
-    } catch (error) {
-        console.error("Gagal menghapus currentUser:", error);
+    } catch {
+        // Fallback hening jika penyimpanan gagal
     }
 }
 
-
-// * Mock data awal bila localStorage belum terisi
-const INITIAL_POSTS = [
+// Data awal eksplorasi (cadangan lokal jika mockPosts kosong)
+export const mockPosts = [
     {
         id: "p1",
         userId: "u1",
+        name: "Dompet coklat",
         status: "hilang",
         isReturned: false,
-        name: "Dompet kulit coklat",
         category: "Dompet & Kartu",
-        location: "Kantin Gedung B, meja dekat jendela",
+        location: "Kantin Gedung B",
         date: "Sab, 10 Okt · ±12.00",
         description:
-            "Isinya KTM dan kartu ATM. Uangnya nggak penting, yang penting kartunya balik. Makasih banyak!",
-        features: 'Lipat dua, ada inisial "R" di pojok',
+            "Dompet lipat kulit coklat berisi KTM dan kartu ATM. Uangnya tidak masalah, yang penting kartu identitas kembali.",
+        features: "Kulit asli, ada inisial 'R' kecil di sudut kanan bawah.",
         contact: "081234567890",
-        photos: ["", "", ""], // 3 slot foto placeholder
+        bgTint: "bg-orange-100",
+        photos: [
+            "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=800&q=80",
+        ],
         likes: ["u2"],
         comments: [
             {
@@ -103,17 +106,8 @@ const INITIAL_POSTS = [
                 username: "bima_k",
                 avatarInitials: "BK",
                 avatarColor: "bg-teal-700",
-                text: "Coba tanya ibu kantin, biasanya barang ketinggalan dititip di kasir.",
+                text: "Coba tanya petugas kasir kantin lantai 1.",
                 createdAt: "1 jam lalu",
-            },
-            {
-                id: "c2",
-                userId: "u1",
-                username: "rina.ay",
-                avatarInitials: "RA",
-                avatarColor: "bg-violet-600",
-                text: "Udah ditanya tapi belum ada, makasih ya!",
-                createdAt: "45 menit lalu",
             },
         ],
         user: {
@@ -169,20 +163,41 @@ export function getPostById(id) {
 }
 
 /**
- * Menambahkan komentar baru ke dalam postingan tertentu.
+ * Menambahkan komentar baru ke dalam postingan tertentu dan menyimpannya di localStorage.
  *
  * @param {string} postId ID postingan target.
  * @param {object} newComment Data komentar baru.
- * @returns {object|null} Objek postingan yang diperbarui.
+ * @returns {object|null} Objek postingan yang diperbarui dengan array komentar baru.
  */
 export function addCommentToPost(postId, newComment) {
     const posts = getPosts();
-    const index = posts.findIndex((item) => item.id === postId);
-    if (index === -1) return null;
+    let index = posts.findIndex((item) => item.id === postId);
 
-    posts[index].comments.push(newComment);
+    // * Fallback jika postingan belum tersimpan dalam array localStorage aktif
+    if (index === -1) {
+        const fallback = INITIAL_EXPLORE_POSTS.find((item) => item.id === postId);
+        if (fallback) {
+            posts.push(fallback);
+            index = posts.length - 1;
+        } else {
+            return null;
+        }
+    }
+
+    // ! Jamin properti comments selalu berbentuk array
+    if (!Array.isArray(posts[index].comments)) {
+        posts[index].comments = [];
+    }
+
+    // ? Buat referensi array baru secara immutable agar trigger re-render React selalu terpancing
+    const updatedPost = {
+        ...posts[index],
+        comments: [...posts[index].comments, newComment],
+    };
+    posts[index] = updatedPost;
+
     localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
-    return posts[index];
+    return updatedPost;
 }
 
 /**
