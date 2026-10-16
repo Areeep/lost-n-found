@@ -21,7 +21,7 @@ import { EditProfileModal } from "./components/EditProfileModal";
 import { Sidebar } from "../../components/Sidebar";
 
 /**
- * Halaman Profil Utama aplikasi temuin.
+ * Halaman Profil Utama aplikasi orbit.
  *
  * @param {object} props Properti komponen.
  * @param {Function} [props.onNavigateHome] Callback navigasi ke Beranda.

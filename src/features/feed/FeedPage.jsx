@@ -4,7 +4,7 @@
  * Layer       : Feature Page
  *
  * Description:
- * Halaman Beranda (Feed) temuin. Menampilkan alur postingan barang hilang
+ * Halaman Beranda (Feed) orbit. Menampilkan alur postingan barang hilang
  * dan ditemukan bergaya Instagram, bilah filter status/kategori, sidebar desktop,
  * kolom informasi samping kanan, serta navigasi mobile.
  * ============================================================================

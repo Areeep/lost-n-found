@@ -56,8 +56,8 @@ export function FeedCard({
             : cleanNumber;
 
         const defaultMessage = isHilang
-            ? `Halo, saya melihat postingan "${post.name}" di temuin. Saya rasa saya menemukan barang tersebut.`
-            : `Halo, saya melihat postingan "${post.name}" di temuin. Saya adalah pemilik barang tersebut.`;
+            ? `Halo, saya melihat postingan "${post.name}" di orbit. Saya rasa saya menemukan barang tersebut.`
+            : `Halo, saya melihat postingan "${post.name}" di orbit. Saya adalah pemilik barang tersebut.`;
 
         window.open(
             `https://wa.me/${formattedNumber}?text=${encodeURIComponent(defaultMessage)}`,

@@ -4,7 +4,7 @@
  * Layer       : Root Application
  *
  * Description:
- * Router konfigurasi utama temuin. Menetapkan rute publik (/login)
+ * Router konfigurasi utama orbit. Menetapkan rute publik (/login)
  * serta rute terproteksi (/post/:id, /explore, /create, /profile)
  * di bawah ProtectedRoute guard. Rute root (/) menampilkan katalog barang.
  * ============================================================================
@@ -21,7 +21,7 @@ import { ProfilePage } from "./features/profile/ProfilePage";
 import { getCurrentUser, removeCurrentUser } from "./lib/storage";
 
 /**
- * Komponen root aplikasi temuin.
+ * Komponen root aplikasi orbit.
  *
  * @returns {JSX.Element} Pohon konfigurasi rute aplikasi.
  */

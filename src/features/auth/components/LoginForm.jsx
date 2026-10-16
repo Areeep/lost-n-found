@@ -66,7 +66,7 @@ export function LoginForm({
                     Masuk
                 </h1>
                 <p className="text-sm text-gray-600 mt-1.5 font-sans">
-                    Pakai username atau email kampus untuk mengakses temuin.
+                    Pakai username atau email kampus untuk mengakses orbit.
                 </p>
             </div>
 

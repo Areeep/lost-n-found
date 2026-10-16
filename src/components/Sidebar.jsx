@@ -13,7 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 import { House, Search, Bell, MessageSquare, User, Plus } from "lucide-react";
 
 /**
- * Komponen Sidebar desktop aplikasi temuin.
+ * Komponen Sidebar desktop aplikasi orbit.
  *
  * @param {object} props Properti komponen.
  * @param {string} [props.activeItem] Nama menu aktif eksplisit ("beranda" | "cari" | "notifikasi" | "pesan" | "profil").
@@ -34,10 +34,10 @@ export function Sidebar({ activeItem }) {
 
   return (
     <aside className="sticky top-0 z-20 hidden h-screen w-64 shrink-0 flex-col border-r border-gray-200 bg-white p-6 md:flex">
-      {/* Logo temuin. */}
+      {/* Logo orbit. */}
       <Link to="/" className="mb-8 inline-block">
         <span className="font-heading text-2xl font-extrabold tracking-tight text-gray-900">
-          temuin<span className="text-orange-700">.</span>
+          orbit<span className="text-orange-700">.</span>
         </span>
       </Link>
 
