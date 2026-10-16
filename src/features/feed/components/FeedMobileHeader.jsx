@@ -5,7 +5,7 @@
  *
  * Description:
  * Header bilah atas untuk tampilan layar mobile (< 768px). Menampilkan
- * logo temuin. serta ikon pintasan Notifikasi dan Pesan.
+ * logo orbit. serta ikon pintasan Notifikasi dan Pesan.
  * ============================================================================
  */
 
@@ -20,10 +20,10 @@ import { Bell, Send } from "lucide-react";
 export function FeedMobileHeader() {
     return (
         <header className="md:hidden sticky top-0 z-30 flex items-center justify-between px-4 h-14 bg-white border-b border-gray-200">
-            {/* Logo temuin. */}
+            {/* Logo orbit. */}
             <Link to="/" className="inline-block">
                 <span className="font-heading text-2xl font-extrabold tracking-tight text-gray-900">
-                    temuin<span className="text-orange-700">.</span>
+                    orbit<span className="text-orange-700">.</span>
                 </span>
             </Link>
 

@@ -13,7 +13,7 @@ import { useState, useMemo } from "react";
 import { getPosts } from "../../../lib/storage";
 
 /**
- * Hook pengelola logika pencarian dan penyaringan barang temuin.
+ * Hook pengelola logika pencarian dan penyaringan barang orbit.
  *
  * @returns {object} Kumpulan state filter dan postingan yang tersaring.
  */

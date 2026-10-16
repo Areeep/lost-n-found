@@ -14,7 +14,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { getCurrentUser } from "../../../lib/storage";
 
 /**
- * Komponen pelindung rute aplikasi temuin.
+ * Komponen pelindung rute aplikasi orbit.
  *
  * @param {object} props Properti komponen.
  * @param {React.ReactNode} [props.children] Elemen anak alternatif jika tanpa Outlet.
