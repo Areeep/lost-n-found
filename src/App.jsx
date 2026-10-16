@@ -14,6 +14,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "./features/auth/LoginPage";
 import { ProtectedRoute } from "./features/auth/components/ProtectedRoute";
 import { PostDetailPage } from "./features/post-detail/PostDetailPage";
+import { FeedPage } from "./features/feed/FeedPage";
 import { ExplorePage } from "./features/explore/ExplorePage";
 import { CreatePostPage } from "./features/posts/pages/CreatePostPage";
 import { ProfilePage } from "./features/profile/ProfilePage";
@@ -48,8 +49,9 @@ function App() {
 
         {/* ! Rute Terproteksi: Semua halaman wajib autentikasi */}
         <Route element={<ProtectedRoute />}>
-          {/* Beranda: Menampilkan daftar postingan barang */}
-          <Route path="/" element={<ExplorePage />} />
+          {/* Beranda: Menampilkan feed postingan barang */}
+          <Route path="/" element={<FeedPage />} />
+          <Route path="/beranda" element={<FeedPage />} />
 
           {/* Detail Postingan: Navigasi dinamis berdasarkan id URL */}
           <Route path="/post/:id" element={<PostDetailPage />} />
