@@ -54,7 +54,9 @@ export function savePost(postData) {
     localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(updated));
   } catch (error) {
     console.error("Gagal menyimpan postingan:", error);
-    throw new Error("Penyimpanan lokal penuh. Hapus beberapa foto atau data.");
+    throw new Error("Penyimpanan lokal penuh. Hapus beberapa foto atau data.", {
+      cause: error,
+    });
   }
 
   return newPost;

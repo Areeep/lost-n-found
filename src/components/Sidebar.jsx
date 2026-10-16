@@ -10,13 +10,13 @@
  */
 
 import { Link, useLocation } from "react-router-dom";
-import { House, Search, User, Plus } from "lucide-react";
+import { House, Search, Bell, MessageSquare, User, Plus } from "lucide-react";
 
 /**
- * Komponen Sidebar desktop aplikasi orbit.
+ * Komponen Sidebar desktop aplikasi temuin.
  *
  * @param {object} props Properti komponen.
- * @param {string} [props.activeItem] Nama menu aktif eksplisit ("beranda" | "cari" | "profil").
+ * @param {string} [props.activeItem] Nama menu aktif eksplisit ("beranda" | "cari" | "notifikasi" | "pesan" | "profil").
  * @returns {JSX.Element} Elemen sidebar desktop.
  */
 export function Sidebar({ activeItem }) {
@@ -28,16 +28,16 @@ export function Sidebar({ activeItem }) {
     (location.pathname.startsWith("/profil")
       ? "profil"
       : location.pathname.startsWith("/cari") ||
-        location.pathname.startsWith("/post")
+        location.pathname.startsWith("/explore")
         ? "cari"
         : "beranda");
 
   return (
     <aside className="sticky top-0 z-20 hidden h-screen w-64 shrink-0 flex-col border-r border-gray-200 bg-white p-6 md:flex">
-      {/* Logo orbit. */}
-      <Link to="/cari" className="mb-8 inline-block">
+      {/* Logo temuin. */}
+      <Link to="/" className="mb-8 inline-block">
         <span className="font-heading text-2xl font-extrabold tracking-tight text-gray-900">
-          orbit<span className="text-orange-700">.</span>
+          temuin<span className="text-orange-700">.</span>
         </span>
       </Link>
 
@@ -45,11 +45,12 @@ export function Sidebar({ activeItem }) {
       <nav className="flex-1 space-y-1.5">
         {/* Beranda */}
         <Link
-          to="/cari"
-          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${currentActive === "beranda"
+          to="/"
+          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${
+            currentActive === "beranda"
               ? "bg-gray-100 font-bold text-gray-900"
               : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            }`}
+          }`}
         >
           <House className="size-5" />
           <span>Beranda</span>
@@ -58,10 +59,11 @@ export function Sidebar({ activeItem }) {
         {/* Cari */}
         <Link
           to="/cari"
-          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${currentActive === "cari"
+          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${
+            currentActive === "cari"
               ? "bg-gray-100 font-bold text-gray-900"
               : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            }`}
+          }`}
         >
           <Search
             className={`size-5 ${currentActive === "cari" ? "stroke-[2.5]" : ""}`}
@@ -69,13 +71,42 @@ export function Sidebar({ activeItem }) {
           <span>Cari</span>
         </Link>
 
+        {/* Notifikasi */}
+        <button
+          type="button"
+          onClick={() => {}}
+          className={`w-full flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors cursor-pointer ${
+            currentActive === "notifikasi"
+              ? "bg-gray-100 font-bold text-gray-900"
+              : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          }`}
+        >
+          <Bell className="size-5" />
+          <span>Notifikasi</span>
+        </button>
+
+        {/* Pesan */}
+        <button
+          type="button"
+          onClick={() => {}}
+          className={`w-full flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors cursor-pointer ${
+            currentActive === "pesan"
+              ? "bg-gray-100 font-bold text-gray-900"
+              : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          }`}
+        >
+          <MessageSquare className="size-5" />
+          <span>Pesan</span>
+        </button>
+
         {/* Profil */}
         <Link
           to="/profil"
-          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${currentActive === "profil"
+          className={`flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-sm transition-colors ${
+            currentActive === "profil"
               ? "bg-gray-100 font-bold text-gray-900"
               : "font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            }`}
+          }`}
         >
           <User
             className={`size-5 ${currentActive === "profil" ? "stroke-[2.5]" : ""}`}

@@ -240,3 +240,39 @@ export function toggleSavePost(postId) {
         return false;
     }
 }
+
+/**
+ * Menukar status suka (like) postingan oleh pengguna tertentu dan menyimpan ke localStorage.
+ *
+ * @param {string} postId ID postingan target.
+ * @param {string} userId ID pengguna aktif.
+ * @returns {object|null} Objek postingan dengan array likes terbarui atau null jika gagal.
+ */
+export function toggleLikePost(postId, userId) {
+    if (!postId || !userId) return null;
+    const posts = getPosts();
+    const index = posts.findIndex((item) => item.id === postId);
+    if (index === -1) return null;
+
+    const currentLikes = Array.isArray(posts[index].likes) ? posts[index].likes : [];
+    const isLiked = currentLikes.includes(userId);
+
+    const updatedLikes = isLiked
+        ? currentLikes.filter((id) => id !== userId)
+        : [...currentLikes, userId];
+
+    const updatedPost = {
+        ...posts[index],
+        likes: updatedLikes,
+    };
+    posts[index] = updatedPost;
+
+    try {
+        localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
+    } catch {
+        // Fallback jika penyimpanan gagal
+    }
+
+    return updatedPost;
+}
+

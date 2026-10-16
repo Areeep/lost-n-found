@@ -16,9 +16,6 @@ import {
     Search,
     PlusSquare,
     User,
-    Bell,
-    MessageSquare,
-    Plus,
 } from "lucide-react";
 import { useExplore } from "./hooks/useExplore";
 import { ExploreSearchBar } from "./components/ExploreSearchBar";
