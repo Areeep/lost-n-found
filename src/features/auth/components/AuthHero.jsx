@@ -27,7 +27,7 @@ export function AuthHero() {
 
             {/* Showcase Floating Cards */}
             <div className="my-auto space-y-4 max-w-sm w-full py-8">
-                {/* Kartu 1: HILANG */}
+                {/* Kartu 1: Hilang */}
                 <div className="bg-white text-gray-900 p-4 rounded-2xl shadow-xl flex items-center justify-between gap-3 transform -rotate-3 transition-transform duration-300 hover:rotate-0">
                     <div className="flex items-center gap-3.5 min-w-0">
                         <div className="size-12 rounded-xl bg-orange-100 flex-shrink-0" />
@@ -40,15 +40,15 @@ export function AuthHero() {
                             </p>
                         </div>
                     </div>
-                    <span className="bg-orange-700 text-white font-heading font-bold text-xs uppercase px-2.5 py-1 rounded-md tracking-wider flex-shrink-0">
-                        HILANG
+                    <span className="bg-orange-700 text-white font-heading font-bold text-xs capitalize px-2.5 py-1 rounded-md flex-shrink-0">
+                        Hilang
                     </span>
                 </div>
 
-                {/* Kartu 2: DITEMUKAN */}
+                {/* Kartu 2: Ditemukan */}
                 <div className="bg-white text-gray-900 p-4 rounded-2xl shadow-xl flex items-center justify-between gap-3 transform -rotate-1 translate-x-3 transition-transform duration-300 hover:rotate-0 hover:translate-x-0">
                     <div className="flex items-center gap-3.5 min-w-0">
-                        <div className="size-12 rounded-xl bg-blue-100 flex-shrink-0" />
+                        <div className="size-12 rounded-xl bg-emerald-100 flex-shrink-0" />
                         <div className="min-w-0">
                             <h2 className="font-bold text-sm text-gray-900 truncate">
                                 Kunci motor
@@ -58,8 +58,8 @@ export function AuthHero() {
                             </p>
                         </div>
                     </div>
-                    <span className="bg-blue-700 text-white font-heading font-bold text-xs uppercase px-2.5 py-1 rounded-md tracking-wider flex-shrink-0">
-                        DITEMUKAN
+                    <span className="bg-emerald-700 text-white font-heading font-bold text-xs capitalize px-2.5 py-1 rounded-md flex-shrink-0">
+                        Ditemukan
                     </span>
                 </div>
 

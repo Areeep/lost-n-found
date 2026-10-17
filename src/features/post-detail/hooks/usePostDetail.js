@@ -16,6 +16,8 @@ import {
     isPostSaved,
     toggleSavePost,
     getCurrentUser,
+    updatePost,
+    deletePost,
 } from "../../../lib/storage";
 
 /**
@@ -101,6 +103,25 @@ export function usePostDetail(postId) {
         window.open(`https://wa.me/${formattedPhone}?text=${message}`, "_blank");
     }, [post]);
 
+    // * Handler memperbarui data postingan saat diedit
+    const handleUpdatePost = useCallback(
+        (updatedFields) => {
+            if (!post) return null;
+            const updated = updatePost(post.id, updatedFields);
+            if (updated) {
+                setPost({ ...updated });
+            }
+            return updated;
+        },
+        [post]
+    );
+
+    // ! Handler menghapus postingan secara permanen dari localStorage
+    const handleDeletePost = useCallback(() => {
+        if (!post) return false;
+        return deletePost(post.id);
+    }, [post]);
+
     return {
         post,
         activePhotoIndex,
@@ -114,5 +135,7 @@ export function usePostDetail(postId) {
         saved,
         handleToggleSave,
         handleOpenContact,
+        handleUpdatePost,
+        handleDeletePost,
     };
 }

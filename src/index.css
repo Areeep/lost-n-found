@@ -5,22 +5,25 @@
   --font-sans: "Plus Jakarta Sans", sans-serif;
 
   /* * Konfigurasi Warna Brand & Primary Baru: #1351AA */
-  --color-primary: #1351AA;
+  --color-primary: #1351aa;
   --color-primary-hover: #0e3d82;
-  --color-blue-700: #1351AA;
+  --color-blue-700: #1351aa;
   --color-blue-800: #0e3d82;
   --color-blue-900: #0b2b5c;
 
   --color-lost: var(--color-orange-700);
   --color-lost-soft: var(--color-orange-50);
-  --color-found: #1351AA;
-  --color-found-soft: #eef4fc;
+  --color-found: #047857;
+  --color-found-soft: #ecfdf5;
   --color-ink: var(--color-gray-900);
   --color-muted: var(--color-gray-600);
 }
 
+html,
 body {
   margin: 0;
+  max-width: 100vw;
+  overflow-x: clip;
   background-color: #f3f4f6;
   color: #111827;
   font-family: var(--font-sans);
@@ -30,4 +33,40 @@ body {
 input::-ms-reveal,
 input::-ms-clear {
   display: none;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* * Animasi masuk halus untuk setiap kartu */
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-card-enter {
+  animation: cardEnter 0.25s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-page-enter,
+  .animate-card-enter {
+    animation: none !important;
+  }
 }

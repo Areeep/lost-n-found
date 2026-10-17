@@ -26,32 +26,33 @@ export function ExploreCard({ post }) {
     return (
         <Link
             to={`/post/${post.id}`}
-            className="group block text-left focus:outline-none"
+            className="group block text-left focus:outline-none animate-card-enter"
         >
             {/* ================= TAMPILAN MOBILE (< 768px) ================= */}
-            <div className="md:hidden relative aspect-square rounded-xl overflow-hidden shadow-2xs border border-gray-200/50 bg-gray-100">
-                {photoUrl ? (
-                    <img
-                        src={photoUrl}
-                        alt={post.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-200 group-active:scale-105"
-                    />
-                ) : (
-                    <div className={`w-full h-full ${post.bgTint}`} />
-                )}
+            <div className="md:hidden flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3 shadow-2xs transition-colors group-active:bg-gray-50">
+                {/* Foto Barang */}
+                <div className="relative size-20 shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                    {photoUrl ? (
+                        <img
+                            src={photoUrl}
+                            alt={post.name}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                        />
+                    ) : (
+                        <div className={`w-full h-full ${post.bgTint}`} />
+                    )}
+                </div>
 
-                {/* Indikator Titik Status di Kiri Atas */}
-                <span
-                    className={`absolute top-2.5 left-2.5 size-2.5 rounded-full ring-2 ring-white/80 ${isHilang ? "bg-orange-700" : "bg-blue-700"
-                        }`}
-                />
-
-                {/* Pill Judul Barang di Kiri Bawah */}
-                <div className="absolute bottom-2 left-2 right-2 flex">
-                    <span className="bg-white/95 backdrop-blur-xs text-gray-900 text-[11px] font-bold px-2 py-0.5 rounded-md truncate max-w-full shadow-xs">
-                        {post.name}
+                {/* Info Teks */}
+                <div className="flex flex-col min-w-0 flex-1 gap-1">
+                    <span
+                        className={`self-start px-2 py-0.5 rounded-md text-[10px] font-bold capitalize text-white ${isHilang ? "bg-orange-700" : "bg-emerald-700"}`}
+                    >
+                        {isHilang ? "Hilang" : "Ditemukan"}
                     </span>
+                    <p className="font-bold text-sm text-gray-900 truncate">{post.name}</p>
+                    <p className="text-xs text-gray-500 truncate">{post.location}</p>
                 </div>
             </div>
 
@@ -72,10 +73,10 @@ export function ExploreCard({ post }) {
 
                     {/* Badge Status Kiri Atas */}
                     <span
-                        className={`absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-heading font-extrabold tracking-wider uppercase text-white shadow-xs ${isHilang ? "bg-orange-700" : "bg-blue-700"
+                        className={`absolute top-3 left-3 px-2 py-0.5 rounded-md text-[10px] font-heading font-bold capitalize text-white shadow-xs ${isHilang ? "bg-orange-700" : "bg-emerald-700"
                             }`}
                     >
-                        {isHilang ? "HILANG" : "DITEMUKAN"}
+                        {isHilang ? "Hilang" : "Ditemukan"}
                     </span>
                 </div>
 

@@ -16,14 +16,15 @@ import { PostOptionsMenu } from "./PostOptionsMenu";
  *
  * @param {object} props Properti komponen.
  * @param {object} props.post Data postingan.
+ * @param {Function} [props.onEdit] Callback saat opsi Edit dipilih.
  * @returns {JSX.Element} Bagian informasi detail postingan.
  */
-export function PostDetailInfo({ post }) {
+export function PostDetailInfo({ post, onEdit }) {
   if (!post) return null;
 
   return (
     <div className="space-y-4">
-      {/* Header Pemilik & Menu Titik Tiga */}
+      {/* Header Pemilik & Menu Titik Tiga di Dalam Card */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div
@@ -42,8 +43,12 @@ export function PostDetailInfo({ post }) {
           </div>
         </div>
 
-        {/* * Menu titik tiga berisi opsi Bagikan dan Laporkan */}
-        <PostOptionsMenu postName={post.name} iconSize={20} />
+        {/* * Menu titik tiga di dalam card */}
+        <PostOptionsMenu
+          postName={post.name}
+          iconSize={20}
+          onEdit={onEdit}
+        />
       </div>
 
       {/* Judul Barang */}

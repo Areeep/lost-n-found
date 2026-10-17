@@ -78,7 +78,7 @@ export function PostDetailComments({
                     type="submit"
                     disabled={isCommentEmpty}
                     aria-label="Kirim komentar"
-                    className="absolute right-1.5 flex size-8 items-center justify-center rounded-full bg-gray-900 text-white transition-opacity hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-30"
+                    className="absolute right-1.5 flex size-8 items-center justify-center rounded-full bg-primary text-white transition-opacity hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-30"
                 >
                     {/* * Icon pesawat (Send) dari Lucide sesuai design.md */}
                     <Send size={15} />

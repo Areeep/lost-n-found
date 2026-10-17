@@ -37,15 +37,15 @@ export function FeedCard({
     const [imageError, setImageError] = useState(false);
     const [shareToast, setShareToast] = useState(false);
 
-    // * Teks tombol aksi utama ditetapkan menjadi "Aku menemukannya"
-    const ctaText = "Aku menemukannya";
-
     // ? Turunkan status suka dan jumlah suka secara langsung dari props post (pola pure derived state)
     const currentUserId = currentUser?.id || "u1";
     const isLiked = Array.isArray(post.likes) && post.likes.includes(currentUserId);
     const likesCount = Array.isArray(post.likes) ? post.likes.length : 0;
-    const isHilang = post.status === "hilang";
+    const isHilang = (post.status || "").toLowerCase() === "hilang";
     const commentsCount = Array.isArray(post.comments) ? post.comments.length : 0;
+
+    // * Teks tombol aksi: "Aku menemukannya" untuk barang hilang, "Ini punyaku" untuk barang ditemukan
+    const ctaText = isHilang ? "Aku menemukannya" : "Ini punyaku";
 
     // * Handler pembuka kontak WhatsApp pemilik postingan
     const handleContact = () => {
@@ -82,7 +82,7 @@ export function FeedCard({
     const photoUrl = post.photos && post.photos.length > 0 ? post.photos[0] : null;
 
     return (
-        <article className="bg-white border border-gray-200 md:rounded-2xl overflow-hidden mb-4 md:mb-6 shadow-xs">
+        <article className="bg-white border border-gray-200 md:rounded-2xl overflow-hidden mb-4 md:mb-6 shadow-xs animate-card-enter">
             {/* Header: Profil Poster & Menu Opsi */}
             <header className="flex items-center justify-between px-4 py-3">
                 <div className="flex items-center gap-3">
@@ -112,13 +112,13 @@ export function FeedCard({
 
             {/* Container Foto Barang / Placeholder */}
             <div className="relative w-full h-[330px] md:h-[420px] bg-gray-100 overflow-hidden">
-                {/* Badge Status (HILANG / DITEMUKAN) */}
+                {/* Badge Status (Hilang / Ditemukan) */}
                 <div
-                    className={`absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md font-heading text-xs font-bold uppercase tracking-wider text-white shadow-xs ${
-                        isHilang ? "bg-orange-700" : "bg-blue-700"
+                    className={`absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md font-heading text-xs font-bold capitalize text-white shadow-xs ${
+                        isHilang ? "bg-orange-700" : "bg-emerald-700"
                     }`}
                 >
-                    {isHilang ? "HILANG" : "DITEMUKAN"}
+                    {isHilang ? "Hilang" : "Ditemukan"}
                 </div>
 
                 {/* Foto Postingan dari storage.js atau Placeholder Visual */}
@@ -132,7 +132,7 @@ export function FeedCard({
                 ) : (
                     <div
                         className={`w-full h-full flex flex-col items-center justify-center transition-colors ${
-                            isHilang ? "bg-orange-100/70" : "bg-blue-100/70"
+                            isHilang ? "bg-orange-100/70" : "bg-emerald-100/70"
                         }`}
                     >
                         <ImageIcon className="size-12 stroke-[1.5] text-gray-600 mb-2" />
@@ -207,7 +207,7 @@ export function FeedCard({
                     <button
                         type="button"
                         onClick={handleContact}
-                        className="flex-1 h-12 bg-gray-900 hover:bg-black text-white font-bold text-sm rounded-xl transition-colors cursor-pointer flex items-center justify-center shadow-xs"
+                        className="flex-1 h-12 bg-primary hover:bg-primary-hover text-white font-bold text-sm rounded-xl transition-colors cursor-pointer flex items-center justify-center shadow-xs"
                     >
                         {ctaText}
                     </button>

@@ -46,7 +46,7 @@ export function LoginPage({
     });
 
     return (
-        <main className="min-h-screen bg-white grid grid-cols-1 md:grid-cols-2">
+        <main className="min-h-screen bg-white grid grid-cols-1 md:grid-cols-2 w-full max-w-full overflow-x-hidden animate-page-enter">
             {/* Kolom Kiri: Hero Desktop */}
             <AuthHero />
 

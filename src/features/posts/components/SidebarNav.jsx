@@ -3,13 +3,11 @@
  * Matches Instagram-style web layout defined in design.md and mockup.
  */
 
-import { Home, Search, Bell, MessageSquare, User, Plus } from "lucide-react";
+import { Home, Search, User, Plus } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Beranda", icon: Home, active: false },
   { label: "Cari", icon: Search, active: false },
-  { label: "Notifikasi", icon: Bell, active: false },
-  { label: "Pesan", icon: MessageSquare, active: false },
   { label: "Profil", icon: User, active: false },
 ];
 
@@ -54,7 +52,7 @@ export function SidebarNav({ onCreatePostClick }) {
           <button
             type="button"
             onClick={onCreatePostClick}
-            className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-gray-900 text-sm font-bold text-white shadow-sm transition hover:bg-gray-800"
+            className="bg-primary hover:bg-primary-hover flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl text-sm font-bold text-white shadow-sm transition"
           >
             <Plus className="h-4 w-4" />
             <span>Posting barang</span>

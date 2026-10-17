@@ -39,18 +39,26 @@ export function ProfileHeader({ user, stats, onLogout, onEditProfile }) {
 
         {/* Info & Aksi Desktop */}
         <div className="flex-1 space-y-4 pt-2">
-          {/* Baris 1: Username & Tombol Edit Profil */}
+          {/* Baris 1: Username & Tombol Edit Profil & Logout */}
           <div className="flex items-center gap-4">
             <h1 className="font-heading text-2xl font-bold tracking-tight text-gray-900">
               {user.username}
             </h1>
-            <div>
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={onEditProfile}
                 className="h-9 cursor-pointer rounded-xl bg-gray-100 px-4 text-sm font-bold text-gray-900 transition-colors hover:bg-gray-200"
               >
                 Edit profil
+              </button>
+              <button
+                type="button"
+                onClick={onLogout}
+                className="flex h-9 cursor-pointer items-center gap-2 rounded-xl border border-gray-300 bg-white px-4 text-sm font-bold text-gray-700 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+              >
+                <LogOut size={16} />
+                <span>Keluar</span>
               </button>
             </div>
           </div>
@@ -92,9 +100,10 @@ export function ProfileHeader({ user, stats, onLogout, onEditProfile }) {
             type="button"
             onClick={onLogout}
             aria-label="Keluar dari akun"
-            className="flex size-10 items-center justify-center text-gray-900 transition-colors hover:text-orange-700"
+            className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-bold text-gray-700 shadow-2xs transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600 cursor-pointer"
           >
-            <LogOut size={22} />
+            <LogOut size={16} />
+            <span>Keluar</span>
           </button>
         </div>
 

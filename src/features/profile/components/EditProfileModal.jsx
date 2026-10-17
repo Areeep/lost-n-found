@@ -187,7 +187,7 @@ export function EditProfileModal({ user, isOpen, onClose, onSave }) {
             </button>
             <button
               type="submit"
-              className="h-11 rounded-xl bg-gray-900 px-5 font-bold text-white transition-colors hover:bg-gray-800"
+              className="h-11 rounded-xl bg-primary px-5 font-bold text-white transition-colors hover:bg-primary-hover cursor-pointer"
             >
               Simpan
             </button>

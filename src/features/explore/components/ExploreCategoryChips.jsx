@@ -21,7 +21,7 @@ import { CATEGORIES } from "../data/mockPosts";
  */
 export function ExploreCategoryChips({ activeCategory, onSelectCategory }) {
     return (
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0">
+        <div className="flex w-full max-w-full min-w-0 items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none">
             {CATEGORIES.map((category) => {
                 const isSelected = activeCategory === category;
                 return (
@@ -29,8 +29,8 @@ export function ExploreCategoryChips({ activeCategory, onSelectCategory }) {
                         key={category}
                         type="button"
                         onClick={() => onSelectCategory(category)}
-                        className={`h-9 px-4 rounded-full text-xs md:text-sm whitespace-nowrap transition-colors border shrink-0 ${isSelected
-                                ? "bg-gray-900 text-white font-bold border-gray-900"
+                        className={`h-9 px-4 rounded-full text-xs md:text-sm whitespace-nowrap transition-colors border shrink-0 cursor-pointer ${isSelected
+                                ? "bg-primary text-white font-bold border-primary"
                                 : "bg-white hover:bg-gray-50 text-gray-700 font-medium border-gray-300"
                             }`}
                     >

@@ -60,12 +60,12 @@ export function CreatePostPage({ onCancel, onCreated }) {
   const statusCfg = STATUS_CONFIG[values.status];
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 font-sans text-gray-900 md:flex-row">
+    <div className="flex min-h-screen flex-col bg-gray-100 font-sans text-gray-900 md:flex-row w-full max-w-full">
       {/* Sidebar Navigasi Desktop */}
       <Sidebar />
 
       {/* Kontainer Utama */}
-      <main className="flex min-w-0 flex-1 flex-col items-center md:px-8 md:py-10">
+      <main className="flex min-w-0 flex-1 flex-col items-center md:px-8 md:py-10 animate-page-enter">
         {/* --- Top Navbar Layar Ponsel (< md) --- */}
         <header className="sticky top-0 z-10 flex h-14 w-full items-center justify-between border-b border-gray-200 bg-white px-4 md:hidden">
           <button
@@ -300,7 +300,7 @@ export function CreatePostPage({ onCancel, onCreated }) {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex h-12 w-full cursor-pointer items-center justify-center rounded-xl bg-gray-900 text-sm font-bold text-white shadow-sm transition hover:bg-gray-800 disabled:bg-gray-400"
+                    className="flex h-12 w-full cursor-pointer items-center justify-center rounded-xl bg-primary text-sm font-bold text-white shadow-sm transition hover:bg-primary-hover disabled:opacity-60"
                   >
                     {isSubmitting ? "Menyimpan..." : "Bagikan postingan"}
                   </button>

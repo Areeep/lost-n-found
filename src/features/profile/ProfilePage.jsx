@@ -47,17 +47,17 @@ export function ProfilePage({
     if (onNavigatePostDetail) {
       onNavigatePostDetail(postId);
     } else {
-      navigate(`/post/${postId}`);
+      navigate(`/post/${postId}`, { state: { fromProfile: true } });
     }
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100 font-sans text-gray-900 md:flex-row">
+    <div className="flex min-h-screen flex-col bg-gray-100 font-sans text-gray-900 md:flex-row w-full max-w-full">
       {/* Sidebar Desktop */}
       <Sidebar activeItem="profil" />
 
       {/* Konten Utama Profil */}
-      <main className="flex min-w-0 flex-1 flex-col pb-20 md:pb-8">
+      <main className="flex min-w-0 flex-1 flex-col pb-20 md:pb-8 animate-page-enter">
         <div className="mx-auto w-full max-w-[935px] p-4 md:p-8">
           {/* Header Profil */}
           <ProfileHeader
