@@ -25,6 +25,7 @@ export function PostDetailActionBar({
     ownerUsername,
     onContact,
 }) {
+
     const isLost = status === "hilang";
     const ctaLabel = isLost
         ? `Aku menemukannya — chat ${ownerUsername}`
@@ -32,11 +33,11 @@ export function PostDetailActionBar({
 
     return (
         <div className="w-full pt-3">
-            {/* * Tombol CTA Utama lebar penuh menggantikan tata letak lama */}
+            {/* * Tombol CTA Utama lebar penuh */}
             <button
                 type="button"
                 onClick={onContact}
-                className="h-12 w-full rounded-xl bg-gray-900 text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-gray-800 focus-visible:outline-2 focus-visible:outline-blue-700 transition-colors cursor-pointer px-4"
+                className="h-12 w-full rounded-xl bg-primary text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-blue-700 transition-colors cursor-pointer px-4 shadow-xs"
             >
                 <MessageSquare size={18} />
                 <span className="truncate">{ctaLabel}</span>

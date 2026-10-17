@@ -66,7 +66,7 @@ export function FeedFilterChips({
     };
 
     return (
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex w-full max-w-full min-w-0 items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             {FEED_FILTERS.map((filter) => {
                 const active = isChipActive(filter);
                 return (
@@ -76,7 +76,7 @@ export function FeedFilterChips({
                         onClick={() => handleChipClick(filter)}
                         className={`h-9 shrink-0 px-4 rounded-full border text-sm font-semibold transition-colors cursor-pointer ${
                             active
-                                ? "bg-gray-900 border-gray-900 text-white"
+                                ? "bg-primary border-primary text-white"
                                 : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50"
                         }`}
                     >

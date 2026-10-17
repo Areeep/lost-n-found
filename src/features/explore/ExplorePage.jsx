@@ -40,12 +40,12 @@ export function ExplorePage() {
     } = useExplore();
 
     return (
-        <div className="min-h-screen bg-white md:bg-gray-100 flex flex-col md:flex-row text-gray-900">
+        <div className="min-h-screen bg-white md:bg-gray-100 flex flex-col md:flex-row text-gray-900 w-full max-w-full">
             {/* ================= SIDEBAR DESKTOP (>= 768px) ================= */}
             <Sidebar activeItem="cari" />
 
             {/* ================= KONTEN UTAMA ================= */}
-            <main className="flex-1 min-w-0 max-w-7xl mx-auto px-4 md:px-8 py-5 md:py-8 pb-24 md:pb-12 bg-white md:bg-white md:my-6 md:rounded-3xl md:shadow-xs md:border md:border-gray-200">
+            <main className="flex-1 w-full min-w-0 max-w-7xl mx-auto px-4 md:px-8 py-5 md:py-8 pb-24 md:pb-12 bg-white md:bg-white md:my-6 md:rounded-3xl md:shadow-xs md:border md:border-gray-200 animate-page-enter">
                 {/* Judul Halaman */}
                 <h1 className="font-heading font-extrabold text-2xl md:text-3xl tracking-tight text-gray-900 mb-4 md:mb-6">
                     Cari barang
@@ -81,7 +81,7 @@ export function ExplorePage() {
                             Hilang
                         </span>
                         <span className="inline-flex items-center gap-1.5">
-                            <span className="size-2 rounded-full bg-blue-700" />
+                            <span className="size-2 rounded-full bg-emerald-700" />
                             Ditemukan
                         </span>
                     </div>
@@ -93,7 +93,7 @@ export function ExplorePage() {
                         <p className="font-medium text-sm">Tidak ada barang yang cocok dengan pencarian.</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
                         {filteredPosts.map((post) => (
                             <ExploreCard key={post.id} post={post} />
                         ))}
@@ -104,7 +104,7 @@ export function ExplorePage() {
             {/* ================= BOTTOM BAR NAVIGASI MOBILE (< 768px) ================= */}
             <footer className="md:hidden fixed bottom-0 inset-x-0 h-16 bg-white border-t border-gray-200 flex items-center justify-around z-40 px-2">
                 <Link
-                    to="/cari"
+                    to="/"
                     className="flex flex-col items-center justify-center gap-1 min-w-[56px] text-gray-500 hover:text-gray-900"
                 >
                     <House className="size-5" />
@@ -119,13 +119,13 @@ export function ExplorePage() {
                     <span className="text-[11px] font-bold">Cari</span>
                 </Link>
 
-                <button
-                    type="button"
+                <Link
+                    to="/buat"
                     className="flex flex-col items-center justify-center gap-1 min-w-[56px] text-gray-500 hover:text-gray-900"
                 >
                     <PlusSquare className="size-5" />
                     <span className="text-[11px] font-medium">Posting</span>
-                </button>
+                </Link>
 
                 <Link
                     to="/profil"

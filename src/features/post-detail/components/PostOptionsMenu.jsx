@@ -10,7 +10,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Ellipsis, Share2, Flag } from "lucide-react";
+import { Ellipsis, Share2, Flag, Pencil } from "lucide-react";
 
 /**
  * Komponen menu dropdown opsi postingan.
@@ -18,9 +18,14 @@ import { Ellipsis, Share2, Flag } from "lucide-react";
  * @param {object} props Properti komponen.
  * @param {string} [props.postName] Nama barang yang ditampilkan.
  * @param {number} [props.iconSize=20] Ukuran icon Ellipsis.
+ * @param {Function} [props.onEdit] Callback saat opsi Edit postingan dipilih.
  * @returns {JSX.Element} Elemen tombol dan menu dropdown opsi.
  */
-export function PostOptionsMenu({ postName = "Barang", iconSize = 20 }) {
+export function PostOptionsMenu({
+    postName = "Barang",
+    iconSize = 20,
+    onEdit,
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState(null);
     const menuRef = useRef(null);
@@ -92,6 +97,23 @@ export function PostOptionsMenu({ postName = "Barang", iconSize = 20 }) {
                         <Share2 size={16} className="text-gray-600" />
                         <span>Bagikan</span>
                     </button>
+
+                    {/* Opsi Edit Postingan */}
+                    {onEdit && (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsOpen(false);
+                                onEdit();
+                            }}
+                            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-100 cursor-pointer text-left"
+                        >
+                            <Pencil size={16} className="text-gray-600" />
+                            <span>Edit postingan</span>
+                        </button>
+                    )}
+
+                    <div className="my-1 border-t border-gray-100" />
 
                     <button
                         type="button"

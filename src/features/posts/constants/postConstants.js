@@ -38,11 +38,11 @@ export const STATUS_CONFIG = {
     dateLabel: "Tanggal ditemukan",
     locationLabel: "Ditemukan di",
     locationPlaceholder: "cth. Meja Perpustakaan Lt. 2",
-    colorKey: "blue",
-    activeBorder: "border-blue-700",
-    activeBg: "bg-blue-50",
-    activeText: "text-blue-700",
-    previewBg: "bg-blue-100",
+    colorKey: "emerald",
+    activeBorder: "border-emerald-700",
+    activeBg: "bg-emerald-50",
+    activeText: "text-emerald-700",
+    previewBg: "bg-emerald-100",
   },
 };
 

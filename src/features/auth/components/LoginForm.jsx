@@ -150,7 +150,7 @@ export function LoginForm({
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-12 rounded-xl bg-gray-900 hover:bg-gray-800 active:scale-[0.99] text-white font-bold text-sm md:text-[15px] transition disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+                    className="w-full h-12 rounded-xl bg-primary hover:bg-primary-hover active:scale-[0.99] text-white font-bold text-sm md:text-[15px] transition disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 cursor-pointer shadow-xs"
                 >
                     {isSubmitting ? "Memproses..." : "Masuk"}
                 </button>

@@ -9,7 +9,7 @@
  * ============================================================================
  */
 
-import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, Check, Image as ImageIcon } from "lucide-react";
 
 /**
  * Komponen carousel foto dan badge status postingan.
@@ -17,6 +17,7 @@ import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
  * @param {object} props Properti komponen.
  * @param {string} props.status Status barang ("hilang" | "ditemukan").
  * @param {Array<string>} props.photos Daftar URL gambar.
+ * @param {boolean} [props.isReturned=false] Status apakah barang sudah kembali.
  * @param {number} props.activeIndex Indeks foto aktif.
  * @param {number} props.totalPhotos Total foto tersedia.
  * @param {Function} props.onNext Navigasi ke foto berikutnya.
@@ -27,6 +28,7 @@ import { ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
 export function PostDetailMedia({
     status,
     photos = [],
+    isReturned = false,
     activeIndex,
     totalPhotos,
     onNext,
@@ -40,18 +42,28 @@ export function PostDetailMedia({
         <div className="relative flex flex-col items-center">
             {/* Container Foto */}
             <div
-                className={`relative w-full aspect-square flex items-center justify-center overflow-hidden select-none ${isLost ? "bg-orange-100" : "bg-blue-100"
+                className={`relative w-full aspect-square flex items-center justify-center overflow-hidden select-none ${isLost ? "bg-orange-100" : "bg-emerald-100"
                     }`}
             >
                 {/* Badge Status Top-Left */}
                 <div className="absolute top-4 left-4 z-10">
                     <span
-                        className={`font-heading font-bold text-xs uppercase tracking-wider px-3 py-1.5 rounded-md text-white shadow-sm ${isLost ? "bg-orange-700" : "bg-blue-700"
+                        className={`font-heading font-bold text-xs capitalize px-3 py-1.5 rounded-md text-white shadow-sm ${isLost ? "bg-orange-700" : "bg-emerald-700"
                             }`}
                     >
-                        {isLost ? "HILANG" : "DITEMUKAN"}
+                        {isLost ? "Hilang" : "Ditemukan"}
                     </span>
                 </div>
+
+                {/* Badge Sudah Kembali Top-Right */}
+                {isReturned && (
+                    <div className="absolute top-4 right-4 z-10">
+                        <span className="font-heading font-bold text-xs px-3 py-1.5 rounded-md bg-gray-900/85 backdrop-blur-xs text-white shadow-sm flex items-center gap-1.5">
+                            <Check size={14} strokeWidth={2.5} />
+                            <span>Sudah kembali</span>
+                        </span>
+                    </div>
+                )}
 
                 {/* Gambar Nyata atau Placeholder */}
                 {currentPhotoUrl ? (

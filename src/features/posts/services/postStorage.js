@@ -37,7 +37,7 @@ export function savePost(postData) {
     description: postData.description || "",
     features: postData.description || postData.features || "-",
     contact: postData.contactWhatsapp || postData.contact || "",
-    bgTint: statusMapped === "hilang" ? "bg-orange-100" : "bg-blue-100",
+    bgTint: statusMapped === "hilang" ? "bg-orange-100" : "bg-emerald-100",
     photos:
       postData.photos && postData.photos.length > 0
         ? postData.photos

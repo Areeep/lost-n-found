@@ -155,11 +155,7 @@ export function getPosts() {
  */
 export function getPostById(id) {
     const posts = getPosts();
-    const found = posts.find((item) => item.id === id);
-    if (found) return found;
-
-    // Fallback cadangan langsung ke array mockPosts
-    return INITIAL_EXPLORE_POSTS.find((item) => item.id === id) || null;
+    return posts.find((item) => item.id === id) || null;
 }
 
 /**
@@ -274,5 +270,74 @@ export function toggleLikePost(postId, userId) {
     }
 
     return updatedPost;
+}
+
+/**
+ * Memperbarui data postingan tertentu dan menyimpannya di localStorage.
+ *
+ * @param {string} postId ID postingan yang akan diubah.
+ * @param {object} updatedFields Objek data perubahan properti postingan.
+ * @returns {object|null} Objek postingan hasil pembaruan atau null bila gagal.
+ */
+export function updatePost(postId, updatedFields) {
+    if (!postId || !updatedFields) return null;
+    const posts = getPosts();
+    let index = posts.findIndex((item) => item.id === postId);
+
+    // * Jika belum ada di localStorage (fallback dari mock), simpan ke array aktif
+    if (index === -1) {
+        const fallback = INITIAL_EXPLORE_POSTS.find((item) => item.id === postId);
+        if (fallback) {
+            posts.push(fallback);
+            index = posts.length - 1;
+        } else {
+            return null;
+        }
+    }
+
+    const currentPost = posts[index];
+    const statusChanged = updatedFields.status && updatedFields.status !== currentPost.status;
+    const newStatus = updatedFields.status || currentPost.status;
+
+    // ? Perbarui warna latar fallback jika status barang berubah
+    const bgTint = statusChanged
+        ? newStatus === "hilang"
+            ? "bg-orange-100"
+            : "bg-emerald-100"
+        : currentPost.bgTint;
+
+    const updatedPost = {
+        ...currentPost,
+        ...updatedFields,
+        bgTint,
+    };
+    posts[index] = updatedPost;
+
+    try {
+        localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
+    } catch {
+        // Fallback jika penyimpanan lokal bermasalah
+    }
+
+    return updatedPost;
+}
+
+/**
+ * Menghapus postingan dari localStorage berdasarkan ID postingan.
+ *
+ * @param {string} postId ID postingan yang akan dihapus.
+ * @returns {boolean} Status keberhasilan penghapusan data.
+ */
+export function deletePost(postId) {
+    if (!postId) return false;
+    const posts = getPosts();
+    const filtered = posts.filter((item) => item.id !== postId);
+
+    try {
+        localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(filtered));
+        return true;
+    } catch {
+        return false;
+    }
 }
 

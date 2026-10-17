@@ -44,7 +44,7 @@ export function ProfilePostGrid({ posts, onSelectPost }) {
             key={item.id}
             type="button"
             onClick={() => onSelectPost?.(item.id)}
-            className={`group relative aspect-square cursor-pointer overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-blue-700 ${bgClass}`}
+            className={`group relative aspect-square cursor-pointer overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-blue-700 animate-card-enter ${bgClass}`}
           >
             {/* Foto Postingan dari Storage */}
             {photoUrl ? (

@@ -36,7 +36,7 @@ export function FeedPage() {
     } = useFeed();
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row text-gray-900">
+        <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row text-gray-900 w-full max-w-full">
             {/* ================= SIDEBAR DESKTOP (>= 768px) ================= */}
             <Sidebar activeItem="beranda" />
 
@@ -44,12 +44,12 @@ export function FeedPage() {
             <FeedMobileHeader />
 
             {/* ================= AREA KONTEN UTAMA ================= */}
-            <main className="flex-1 min-w-0 max-w-7xl mx-auto px-0 md:px-8 py-0 md:py-8 pb-20 md:pb-12">
-                <div className="flex items-start justify-center gap-8">
-                    {/* Kolom Feed Tengah */}
-                    <div className="w-full max-w-[600px] shrink-0">
+            <main className="flex-1 w-full min-w-0 max-w-7xl mx-auto px-0 md:px-8 py-0 md:py-8 pb-20 md:pb-12">
+                <div className="flex items-start justify-center gap-8 w-full min-w-0 animate-page-enter">
+                    {/* Kolom Feed Tengah (Responsive, tidak overflow) */}
+                    <div className="w-full max-w-[600px] min-w-0">
                         {/* Bilah Filter Status & Kategori */}
-                        <div className="px-4 md:px-0 py-3 md:py-0 md:mb-5 bg-white md:bg-transparent border-b md:border-b-0 border-gray-200">
+                        <div className="w-full min-w-0 px-4 md:px-0 py-3 md:py-0 md:mb-5 bg-white md:bg-transparent border-b md:border-b-0 border-gray-200 overflow-hidden">
                             <FeedFilterChips
                                 statusFilter={statusFilter}
                                 onStatusChange={setStatusFilter}
@@ -73,13 +73,13 @@ export function FeedPage() {
                                         setStatusFilter("Semua");
                                         setCategoryFilter("Semua");
                                     }}
-                                    className="px-4 py-2 bg-gray-900 text-white rounded-xl text-xs font-bold hover:bg-black transition-colors"
+                                    className="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-hover transition-colors cursor-pointer"
                                 >
                                     Reset filter
                                 </button>
                             </div>
                         ) : (
-                            <div>
+                            <div className="space-y-4 md:space-y-6">
                                 {posts.map((post) => (
                                     <FeedCard
                                         key={post.id}

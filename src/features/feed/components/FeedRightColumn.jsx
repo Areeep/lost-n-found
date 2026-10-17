@@ -43,7 +43,7 @@ export function FeedRightColumn({ currentUser }) {
             : allPosts.slice(0, 3);
 
     return (
-        <aside className="w-80 shrink-0 space-y-5 hidden lg:block">
+        <aside className="w-80 shrink-0 space-y-5 hidden lg:block sticky top-8 self-start">
             {/* Profil Ringkas Pengguna */}
             <div className="flex items-center justify-between py-2">
                 <div className="flex items-center gap-3">
@@ -124,17 +124,17 @@ export function FeedRightColumn({ currentUser }) {
             </div>
 
             {/* Kartu Callout: Nemu barang orang? */}
-            <div className="bg-gray-900 rounded-2xl p-5 text-white shadow-xs">
+            <div className="bg-primary rounded-2xl p-5 text-white shadow-xs">
                 <h2 className="font-heading font-bold text-base mb-1.5">
                     Nemu barang orang?
                 </h2>
-                <p className="text-xs text-gray-300 leading-relaxed mb-4">
+                <p className="text-xs text-blue-200 leading-relaxed mb-4">
                     Foto barangnya, tulis lokasinya, lalu titipkan ke pos satpam terdekat kalau bisa.
                 </p>
 
                 <Link
                     to="/buat"
-                    className="w-full h-10 bg-white hover:bg-gray-100 text-gray-900 font-bold text-xs rounded-xl flex items-center justify-center transition-colors shadow-xs"
+                    className="w-full h-10 bg-white hover:bg-blue-50 text-primary font-bold text-xs rounded-xl flex items-center justify-center transition-colors shadow-xs"
                 >
                     Posting sekarang
                 </Link>
