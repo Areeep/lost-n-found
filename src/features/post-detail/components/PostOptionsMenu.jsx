@@ -10,7 +10,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Ellipsis, Share2, Flag, Pencil } from "lucide-react";
+import { Ellipsis, Share2, Flag, Pencil, Trash2 } from "lucide-react";
 
 /**
  * Komponen menu dropdown opsi postingan.
@@ -19,12 +19,14 @@ import { Ellipsis, Share2, Flag, Pencil } from "lucide-react";
  * @param {string} [props.postName] Nama barang yang ditampilkan.
  * @param {number} [props.iconSize=20] Ukuran icon Ellipsis.
  * @param {Function} [props.onEdit] Callback saat opsi Edit postingan dipilih.
+ * @param {Function} [props.onDelete] Callback saat opsi Hapus postingan dipilih.
  * @returns {JSX.Element} Elemen tombol dan menu dropdown opsi.
  */
 export function PostOptionsMenu({
     postName = "Barang",
     iconSize = 20,
     onEdit,
+    onDelete,
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState(null);
@@ -110,6 +112,21 @@ export function PostOptionsMenu({
                         >
                             <Pencil size={16} className="text-gray-600" />
                             <span>Edit postingan</span>
+                        </button>
+                    )}
+
+                    {/* Opsi Hapus Postingan */}
+                    {onDelete && (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setIsOpen(false);
+                                onDelete();
+                            }}
+                            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 cursor-pointer text-left"
+                        >
+                            <Trash2 size={16} className="text-red-700" />
+                            <span>Hapus postingan</span>
                         </button>
                     )}
 
