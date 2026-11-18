@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { X, Check } from "lucide-react";
+import { X } from "lucide-react";
 import { ITEM_CATEGORIES } from "../../posts/constants/postConstants";
 
 /**
@@ -24,43 +24,46 @@ import { ITEM_CATEGORIES } from "../../posts/constants/postConstants";
  * @returns {JSX.Element|null} Elemen dialog modal edit postingan.
  */
 export function EditPostModal({ post, isOpen, onClose, onSave }) {
-  const [name, setName] = useState("");
-  const [status, setStatus] = useState("hilang");
-  const [category, setCategory] = useState("Lainnya");
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [features, setFeatures] = useState("");
-  const [contact, setContact] = useState("");
-  const [isReturned, setIsReturned] = useState(false);
+  if (!isOpen || !post) return null;
 
-  // * Sinkronisasi data form dengan props post ketika modal dibuka
-  useEffect(() => {
-    if (post && isOpen) {
-      setName(post.name || "");
-      setStatus(post.status || "hilang");
-      setCategory(post.category || "Lainnya");
-      setLocation(post.location || "");
-      setDate(post.date || "");
-      setDescription(post.description || "");
-      setFeatures(post.features || "");
-      setContact(post.contact || "");
-      setIsReturned(Boolean(post.isReturned));
-    }
-  }, [post, isOpen]);
+  // * Form dipasang ulang tiap modal dibuka sehingga state awal selalu diambil
+  // * dari post terbaru tanpa sinkronisasi lewat effect
+  return (
+    <EditPostForm key={post.id} post={post} onClose={onClose} onSave={onSave} />
+  );
+}
+
+/**
+ * Isi modal edit. Dipasang hanya saat modal terbuka dan menginisialisasi
+ * state form langsung dari data postingan.
+ *
+ * @param {object} props Properti komponen.
+ * @param {object} props.post Data postingan yang diedit.
+ * @param {Function} props.onClose Callback saat modal ditutup.
+ * @param {Function} props.onSave Callback menyimpan perubahan data postingan.
+ * @returns {JSX.Element} Elemen dialog modal edit postingan.
+ */
+function EditPostForm({ post, onClose, onSave }) {
+  const [name, setName] = useState(post.name || "");
+  const [status, setStatus] = useState(post.status || "hilang");
+  const [category, setCategory] = useState(post.category || "Lainnya");
+  const [location, setLocation] = useState(post.location || "");
+  const [date, setDate] = useState(post.date || "");
+  const [description, setDescription] = useState(post.description || "");
+  const [features, setFeatures] = useState(post.features || "");
+  const [contact, setContact] = useState(post.contact || "");
+  const [isReturned, setIsReturned] = useState(Boolean(post.isReturned));
 
   // * Tutup modal menggunakan tombol Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === "Escape") {
         onClose();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
-
-  if (!isOpen || !post) return null;
+  }, [onClose]);
 
   // * Handler submit pembaruan postingan
   const handleSubmit = (e) => {

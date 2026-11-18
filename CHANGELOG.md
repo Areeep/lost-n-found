@@ -9,6 +9,11 @@ dari riwayat commit.
 ### Ditambahkan
 - README proyek, `docs/diagram.md`, dan changelog ini.
 - `@throws` pada `savePost` di `postStorage.js`.
+- Opsi "Hapus postingan" di menu titik tiga untuk pemilik (sebelumnya handler hapus sudah ada tetapi tidak terpasang).
+
+### Diperbaiki
+- 3 error ESLint: `handleConfirmDelete` tidak terpakai, impor `Check` tidak terpakai,
+  dan `setState` di dalam effect pada `EditPostModal` (form kini diinisialisasi dari `post` saat dipasang).
 
 ## [0.1.0] - 2026-10-17
 

@@ -180,6 +180,7 @@ export function PostDetailPage({ postId, onBack }) {
                 <PostDetailInfo
                   post={post}
                   onEdit={isOwner ? handleOpenEdit : undefined}
+                  onDelete={isOwner ? handleConfirmDelete : undefined}
                 />
                 <PostDetailComments
                   comments={post.comments}

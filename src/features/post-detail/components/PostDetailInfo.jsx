@@ -17,9 +17,10 @@ import { PostOptionsMenu } from "./PostOptionsMenu";
  * @param {object} props Properti komponen.
  * @param {object} props.post Data postingan.
  * @param {Function} [props.onEdit] Callback saat opsi Edit dipilih.
+ * @param {Function} [props.onDelete] Callback saat opsi Hapus dipilih.
  * @returns {JSX.Element} Bagian informasi detail postingan.
  */
-export function PostDetailInfo({ post, onEdit }) {
+export function PostDetailInfo({ post, onEdit, onDelete }) {
   if (!post) return null;
 
   return (
@@ -48,6 +49,7 @@ export function PostDetailInfo({ post, onEdit }) {
           postName={post.name}
           iconSize={20}
           onEdit={onEdit}
+          onDelete={onDelete}
         />
       </div>
 
