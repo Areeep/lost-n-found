@@ -9,6 +9,8 @@ import { getPosts, STORAGE_KEYS, getCurrentUser } from "../../../lib/storage";
  * Saves new post with full schema expected by Explore & PostDetail pages.
  * @param {Object} postData - Form values from useCreatePost.
  * @returns {Object} Created post object.
+ * @throws {Error} Bila penulisan ke localStorage gagal (misalnya kuota penuh);
+ * galat asli tersedia pada properti `cause`.
  */
 export function savePost(postData) {
   const existing = getPosts();

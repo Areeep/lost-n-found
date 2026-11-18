@@ -1,0 +1,11 @@
+{
+	"$schema": "https://typedoc.org/schema.json",
+	"entryPoints": ["src"],
+	"entryPointStrategy": "expand",
+	"exclude": ["**/*.css"],
+	"out": "docs/api",
+	"name": "Orbit (Lost & Found)",
+	"readme": "README.md",
+	"tsconfig": "tsconfig.typedoc.json",
+	"skipErrorChecking": true
+}
